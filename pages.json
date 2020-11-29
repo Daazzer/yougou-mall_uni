@@ -8,6 +8,18 @@
       "style": {
         "navigationBarTextStyle": "商品分类"
       }
+    },
+    {
+      "path": "pages/cart/index",
+      "style": {
+        "navigationBarTextStyle": "购物车"
+      }
+    },
+    {
+      "path": "pages/user/index",
+      "style": {
+        "navigationBarTextStyle": "我的"
+      }
     }
   ],
   "globalStyle": {
@@ -36,6 +48,18 @@
         "text": "分类",
         "iconPath": "static/images/category.png",
         "selectedIconPath": "static/images/category_selected.png"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "text": "购物车",
+           "iconPath": "static/images/cart.png",
+           "selectedIconPath": "static/images/cart_selected.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+         "iconPath": "static/images/user.png",
+         "selectedIconPath": "static/images/user_selected.png"
       }
     ]
   },
