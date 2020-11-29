@@ -26,27 +26,27 @@
       <view class="goods-info__content">{{ goodsDetail.goods_name }}</view>
     </view>
     <view class="goods-intro" v-if="goodsDetail.goods_introduce">
-      <view class="goods-intro__title">Í¼ÎÄÏêÇé</view>
+      <view class="goods-intro__title">å›¾æ–‡è¯¦æƒ…</view>
       <rich-text 
         class="goods-intro__content" 
         :nodes="goodsDetail.goods_introduce"
       />
     </view>
-    <view class="goods-intro--none" v-else>ÔİÎŞÏêÇé</view>
+    <view class="goods-intro--none" v-else>æš‚æ— å›¾æ–‡è¯¦æƒ…</view>
     <view class="goods-options-bar">
       <view class="goods-options-bar__opt">
         <view class="goods-options-opt-item">
           <text class="iconfont icon-kefu icon" />
-          <text class="goods-options-opt-item__text">ÁªÏµ¿Í·ş</text>
+          <text class="goods-options-opt-item__text">è”ç³»å®¢æœ</text>
         </view>
         <view class="goods-options-opt-item">
           <text class="iconfont icon-gouwuche icon" />
-          <text class="goods-options-opt-item__text">¹ºÎï³µ</text>
+          <text class="goods-options-opt-item__text">è´­ç‰©è½¦</text>
         </view>
       </view>
       <view class="goods-options-bar__btn">
-        <view class="btn btn--warning">¼ÓÈë¹ºÎï³µ</view>
-        <view class="btn btn--danger">Á¢¼´¹ºÂò</view>
+        <view class="btn btn--warning">åŠ å…¥è´­ç‰©è½¦</view>
+        <view class="btn btn--danger">ç«‹å³è´­ä¹°</view>
       </view>
     </view>
   </view>
@@ -66,7 +66,7 @@ export default {
       const [err, res] = await this.$api.getGoodsDetail({ goods_id })
 
       if (err) {
-        this.$showErrorTips(err, '»ñÈ¡ÉÌÆ·ÏêÇéÊı¾İÊ§°Ü')
+        this.$showErrorTips(err, 'è·å–å•†å“è¯¦æƒ…ä¿¡æ¯å¤±è´¥')
         return
       }
 
@@ -75,7 +75,7 @@ export default {
       if (res.data.message) {
         goodsDetail = res.data.message
       }
-      
+
       this.goodsDetail = goodsDetail
     }
   },
