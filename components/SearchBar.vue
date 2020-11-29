@@ -14,13 +14,6 @@
   padding: 10rpx 25rpx;
   box-sizing: border-box;
   background-color: #ea4350;
-  &.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-  }
   &__btn {
     display: block;
     height: 100%;
