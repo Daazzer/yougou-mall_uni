@@ -2,13 +2,42 @@
   "pages": [
     {
       "path": "pages/index/index"
+    },
+    {
+      "path": "pages/category/index",
+      "style": {
+        "navigationBarTextStyle": "商品分类"
+      }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "优购商城",
     "navigationBarBackgroundColor": "#ea4350",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8c8d8d",
+    "selectedColor": "#e03440",
+    "backgroundColor": "#fafafa",
+    "position": "bottom",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/images/index.png",
+        "selectedIconPath": "static/images/index_selected.png"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类",
+        "iconPath": "static/images/category.png",
+        "selectedIconPath": "static/images/category_selected.png"
+      }
+    ]
   },
   "condition": {
     "current": 0,
