@@ -1,6 +1,6 @@
 <template>
 	<view :class="{ index: true, 'pt-100': isSearchBarFixed }">
-    <SearchBar :class="{ 'search-bar': true, fixed: isSearchBarFixed }" id="searchBar" />
+    <SearchBar :isFixed="isSearchBarFixed" id="searchBar" />
     <swiper
       class="carousel"
       circular
@@ -75,6 +75,7 @@
 import SearchBar from '@/components/SearchBar.vue'
 import { getRect } from '@/utils'
 export default {
+  name: 'index',
   components: {
     SearchBar
   },
