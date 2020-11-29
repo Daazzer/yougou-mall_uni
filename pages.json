@@ -28,6 +28,12 @@
       }
     },
     {
+      "path": "pages/goods_detail/index",
+      "style": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
       "path": "pages/search/index",
       "style": {
         "navigationBarTitleText": "搜索中心",
@@ -80,9 +86,9 @@
     "current": 0,
     "list": [
       {
-        "name": "",
-        "path": "",
-        "query": ""
+        "name": "商品详情",
+        "path": "pages/goods_detail/index",
+        "query": "goods_id=129"
       }
     ]
   }

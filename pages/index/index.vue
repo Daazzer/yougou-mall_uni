@@ -14,7 +14,7 @@
           v-for="carouselItem in carouselItems"
           :key="carouselItem.goods_id"
         >
-          <navigator :url="'/pages/goods_detail/goods_detail?goods_id=' + carouselItem.goods_id">
+          <navigator :url="'/pages/goods_detail/index?goods_id=' + carouselItem.goods_id">
             <image class="swiper-image" :src="carouselItem.image_src" />
           </navigator>
         </swiper-item>
