@@ -73,8 +73,8 @@
     "current": 0,
     "list": [
       {
-        "name": "",
-        "path": "",
+        "name": "搜索中心",
+        "path": "pages/search/index",
         "query": ""
       }
     ]
