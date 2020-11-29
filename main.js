@@ -6,6 +6,7 @@ import { showErrorTips } from './utils'
 Vue.config.productionTip = false
 
 App.mpType = 'app'
+
 Vue.prototype.$api = api
 Vue.prototype.$showErrorTips = showErrorTips
 
