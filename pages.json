@@ -6,7 +6,8 @@
     {
       "path": "pages/category/index",
       "style": {
-        "navigationBarTitleText": "商品分类"
+        "navigationBarTitleText": "商品分类",
+        "enablePullDownRefresh": false
       }
     },
     {
@@ -86,9 +87,9 @@
     "current": 0,
     "list": [
       {
-        "name": "商品详情",
-        "path": "pages/goods_detail/index",
-        "query": "goods_id=129"
+        "name": "商品分类",
+        "path": "pages/category/index",
+        "query": ""
       }
     ]
   }
