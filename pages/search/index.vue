@@ -12,22 +12,24 @@
       >{{ isSearching ? '' : '搜索' }}</button>
     </view>
     <view class="search-result-list" v-if="searchResultItems.length > 0">
-      <view
-        class="search-result-list__item"
+      <GoodsItem 
         v-for="searchResultItem in searchResultItems"
-        :key="searchResultItem.goods_name"
-      >
-        <image :src="searchResultItem.goods_image" />
-        <view class="search-item-content">{{ searchResultItem.goods_name }}</view>
-      </view>
+        :key="searchResultItem.goods_id"
+        :goodsImage="searchResultItem.goods_image"
+        :goodsName="searchResultItem.goods_name"
+      />
     </view>
     <view class="search-result-list--none" v-else>{{ resultNoneText }}</view>
   </view>
 </template>
 
 <script>
+import GoodsItem from '@/components/GoodsItem.vue'
 export default {
   name: 'Search',
+  components: {
+    GoodsItem
+  },
   data () {
     return {
       isSearched: false,
@@ -130,21 +132,6 @@ export default {
 }
 .search-result-list {
   padding: 0 25rpx;
-  &__item {
-    display: flex;
-    padding: 10rpx 0 10rpx 15rpx;
-    image {
-      $size: 190rpx;
-      width: $size;
-      height: $size;
-      flex-shrink: 0;
-    }
-    .search-item-content {
-      margin-left: 30rpx;
-      font-size: 24rpx;
-      color: #434343;
-    }
-  }
   &--none {
     padding-top: 150rpx;
     text-align: center;
