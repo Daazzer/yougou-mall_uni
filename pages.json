@@ -22,6 +22,12 @@
       }
     },
     {
+      "path": "pages/goods_list/index",
+      "style": {
+        "navigationBarTitleText": "商品列表"
+      }
+    },
+    {
       "path": "pages/search/index",
       "style": {
         "navigationBarTitleText": "搜索中心",
@@ -74,8 +80,8 @@
     "current": 0,
     "list": [
       {
-        "name": "搜索中心",
-        "path": "pages/search/index",
+        "name": "",
+        "path": "",
         "query": ""
       }
     ]
