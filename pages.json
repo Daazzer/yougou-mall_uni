@@ -24,7 +24,8 @@
     {
       "path": "pages/search/index",
       "style": {
-        "navigationBarTitleText": "搜索中心"
+        "navigationBarTitleText": "搜索中心",
+        "enablePullDownRefresh": false
       }
     }
   ],
