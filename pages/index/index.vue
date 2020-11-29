@@ -118,9 +118,9 @@ export default {
         cateItems = res.data.message.map(v => {
           // 添加导航路径
           if (v.name === '分类') {
-            v.navigatorUrl = '/pages/category/category'
+            v.navigatorUrl = '/pages/category/index'
           } else {
-            v.navigatorUrl = '/pages/goods_list/goods_list?query=' + v.name
+            v.navigatorUrl = '/pages/goods_list/index?query=' + v.name
           }
           return v
         })
@@ -151,8 +151,9 @@ export default {
     this.renderRecommendItems()
   },
   onShow () {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().currentIndex = 0
+    const page = this.$mp.page
+    if (typeof page.getTabBar === 'function' && page.getTabBar()) {  
+      page.getTabBar().setData({ currentIndex: 0 })  
     }
   },
   async onPageScroll ({ scrollTop }) {
