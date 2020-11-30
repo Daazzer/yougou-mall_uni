@@ -41,6 +41,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 26rpx 0;
     margin-left: 30rpx;
     font-size: 24rpx;
     color: #434343;
