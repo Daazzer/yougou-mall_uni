@@ -9,7 +9,7 @@
       indicator-active-color="#ea4350"
     >
       <template v-if="carouselItems">
-        <swiper-item 
+        <swiper-item
           class="carousel__item"
           v-for="carouselItem in carouselItems"
           :key="carouselItem.goods_id"
@@ -22,8 +22,8 @@
     </swiper>
     <view class="cate-nav-list">
       <template v-if="cateItems">
-        <view 
-          class="cate-nav-list__item" 
+        <view
+          class="cate-nav-list__item"
           v-for="cateItem in cateItems"
           :key="cateItem.image_src"
         >
@@ -53,7 +53,7 @@
               </navigator>
             </view>
             <view class="recommend-pics-list">
-              <block 
+              <block
                 v-for="(recommendProduct, index) in recommendItem.product_list"
                 :key="recommendProduct.image_src"
               >
@@ -107,14 +107,14 @@ export default {
     },
     async renderCateItems () {
       const [err, res] = await this.$api.getCateItems()
-  
+
       if (err) {
         this.$showErrorTips(err, '获取分类导航数据失败')
         return
       }
-  
+
       let cateItems = []
-  
+
       if (res.data.message) {
         cateItems = res.data.message.map(v => {
           // 添加导航路径
@@ -126,23 +126,23 @@ export default {
           return v
         })
       }
- 
+
       this.cateItems = cateItems
     },
     async renderRecommendItems () {
       const [err, res] = await this.$api.getRecommeds()
-  
+
       if (err) {
         this.$showErrorTips(err, '获取推荐商品数据失败')
         return
       }
-  
+
       let recommendItems = []
-  
+
       if (res.data.message) {
         recommendItems = res.data.message
       }
-  
+
       this.recommendItems = recommendItems
     }
   },
@@ -159,8 +159,8 @@ export default {
   },
   async onShow () {
     const page = this.$mp.page
-    if (typeof page.getTabBar === 'function' && page.getTabBar()) {  
-      page.getTabBar().setData({ currentIndex: 0 })  
+    if (typeof page.getTabBar === 'function' && page.getTabBar()) {
+      page.getTabBar().setData({ currentIndex: 0 })
     }
     const { height } = await getRect('#searchBar')
     this.searchBarHeight = height
