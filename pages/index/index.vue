@@ -15,7 +15,7 @@
           :key="carouselItem.goods_id"
         >
           <navigator :url="'/pages/goods_detail/index?goods_id=' + carouselItem.goods_id">
-            <image class="swiper-image" :src="carouselItem.image_src" />
+            <image class="swiper-image" :src="carouselItem.image_src || '/static/images/empty.png'" />
           </navigator>
         </swiper-item>
       </template>
@@ -31,7 +31,7 @@
             :url="cateItem.navigatorUrl"
             :open-type="cateItem.name === '分类' ? 'switchTab' : 'navigate'"
           >
-            <image :src="cateItem.image_src" />
+            <image :src="cateItem.image_src || '/static/images/empty.png'" />
           </navigator>
         </view>
       </template>
@@ -49,7 +49,7 @@
           <view class="recommend-pics">
             <view class="recommend-pics__main">
               <navigator :url="recommendItem.product_list[0].navigator_url | goodsListUrl">
-                <image :src="recommendItem.product_list[0].image_src" />
+                <image :src="recommendItem.product_list[0].image_src || '/static/images/empty.png'" lazy-load />
               </navigator>
             </view>
             <view class="recommend-pics-list">
@@ -59,7 +59,7 @@
               >
                 <view class="recommend-pics-list__item" v-if="index > 0">
                   <navigator :url="recommendProduct.navigator_url | goodsListUrl">
-                    <image :src="recommendProduct.image_src" />
+                    <image :src="recommendProduct.image_src || '/static/images/empty.png'" lazy-load />
                   </navigator>
                 </view>
               </block>

@@ -1,7 +1,7 @@
 <template>
   <view class="goods-detail">
     <swiper
-      class="goods-pics" 
+      class="goods-pics"
       indicator-dots
       indicator-active-color="#ea4350"
     >
@@ -11,7 +11,7 @@
           v-for="goodsPic in goodsDetail.pics"
           :key="goodsPic.pics_id"
         >
-          <image :src="goodsPic.pics_big" />
+          <image :src="goodsPic.pics_big || '/static/images/empty.png'" />
         </swiper-item>
       </template>
     </swiper>
@@ -27,8 +27,8 @@
     </view>
     <view class="goods-intro" v-if="goodsDetail.goods_introduce">
       <view class="goods-intro__title">图文详情</view>
-      <rich-text 
-        class="goods-intro__content" 
+      <rich-text
+        class="goods-intro__content"
         :nodes="goodsDetail.goods_introduce"
       />
     </view>

@@ -31,7 +31,7 @@
               :key="goodsItem.cat_id"
             >
               <navigator :url="'/pages/goods_list/index?cid=' + goodsItem.cat_id">
-                <image :src="goodsItem.cat_icon" />
+                <image :src="goodsItem.cat_icon || '/static/images/empty.png'" lazy-load />
                 <text>{{ goodsItem.cat_name }}</text>
               </navigator>
             </view>
@@ -59,18 +59,18 @@ export default {
   methods: {
     async renderCategoryNavItems () {
       const [err, res] = await this.$api.getCategories()
- 
+
       if (err) {
         this.$showErrorTips(err, '获取分类信息失败')
         return
       }
- 
+
       let categoryNavItems = []
- 
+
       if (res.data.message) {
         categoryNavItems = res.data.message
       }
- 
+
       this.categoryNavItems = categoryNavItems
     },
     handleTapCategoryNav (index) {
@@ -85,8 +85,8 @@ export default {
   },
   onShow () {
     const page = this.$mp.page
-    if (typeof page.getTabBar === 'function' && page.getTabBar()) {  
-      page.getTabBar().setData({ currentIndex: 1 })  
+    if (typeof page.getTabBar === 'function' && page.getTabBar()) {
+      page.getTabBar().setData({ currentIndex: 1 })
     }
   },
   onPullDownRefresh () {
