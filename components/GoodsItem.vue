@@ -1,7 +1,10 @@
 <template>
   <view class="goods-item">
     <image class="goods-item__image" :src="goodsImage" />
-    <view class="goods-item__name">{{ goodsName }}</view>
+    <view class="goods-item__info">
+      <view class="goods-name">{{ goodsName }}</view>
+      <view class="goods-price" v-if="goodsPrice">¥ {{ goodsPrice || 0 }}</view>
+    </view>
   </view>
 </template>
 
@@ -16,6 +19,9 @@ export default {
     goodsName: {
       type: String,
       required: true
+    },
+    goodsPrice: {
+      type: String
     }
   }
 }
@@ -31,10 +37,16 @@ export default {
     height: $size;
     flex-shrink: 0;
   }
-  &__name {
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-left: 30rpx;
     font-size: 24rpx;
     color: #434343;
+    .goods-price {
+      color: #ea4350;
+    }
   }
 }
 </style>
