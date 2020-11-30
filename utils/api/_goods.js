@@ -18,7 +18,7 @@ const getGoodsList = data => http.get('/goods/search', data)
  */
 const getGoodsDetail = data => http.get('/goods/detail', data)
 /**
- * 获取商品详情
+ * 商品搜索
  * @param {Object} data 参数对象
  * @param {number} data.query 关键字
  * @returns {Promise}
