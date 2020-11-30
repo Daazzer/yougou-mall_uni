@@ -82,6 +82,7 @@ export default {
   data () {
     return {
       isSearchBarFixed: false,
+      searchBarHeight: 0,
       carouselItems: [],
       cateItems: [],
       recommendItems: []
@@ -156,15 +157,16 @@ export default {
     this.renderCateItems()
     this.renderRecommendItems()
   },
-  onShow () {
+  async onShow () {
     const page = this.$mp.page
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {  
       page.getTabBar().setData({ currentIndex: 0 })  
     }
+    const { height } = await getRect('#searchBar')
+    this.searchBarHeight = height
   },
   async onPageScroll ({ scrollTop }) {
-    const { height: searchBarHeight } = await getRect('#searchBar')
-
+    const searchBarHeight = this.searchBarHeight
     const isSearchBarFixed = this.isSearchBarFixed
 
     if (scrollTop >= searchBarHeight && !isSearchBarFixed) {
