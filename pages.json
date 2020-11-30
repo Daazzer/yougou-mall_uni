@@ -25,7 +25,10 @@
     {
       "path": "pages/goods_list/index",
       "style": {
-        "navigationBarTitleText": "商品列表"
+        "navigationBarTitleText": "商品列表",
+        "usingComponents": {
+          "tab-bar": "/custom-tab-bar/index"
+        }
       }
     },
     {
@@ -87,8 +90,8 @@
     "current": 0,
     "list": [
       {
-        "name": "商品分类",
-        "path": "pages/category/index",
+        "name": "",
+        "path": "",
         "query": ""
       }
     ]
