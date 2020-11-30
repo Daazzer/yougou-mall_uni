@@ -1,12 +1,10 @@
 <template>
   <view class="goods-item">
     <view class="goods-item__select-bar" v-if="isShowSelectBtn">
-      <text
-        :class="[
-          'iconfont',
-          'goods-select-btn',
-          selectClass
-        ]"
+      <icon
+        size="35rpx"
+        :type="goodsSelected ? 'success' : 'circle'"
+        :color="goodsSelected ? '#e03440': '#8a8a8a'"
         @click="$emit('select-goods')"
       />
     </view>
@@ -51,14 +49,6 @@ export default {
   computed: {
     isShowSelectBtn () {
       return typeof this.goodsSelected === 'boolean'
-    },
-    selectClass () {
-      const iconText = 'icon-'
-      let selectText = 'yuanxingweixuanzhong'
-      if (this.goodsSelected) {
-        selectText = 'yuanxingxuanzhongfill'
-      }
-      return iconText + selectText
     }
   }
 }
@@ -73,12 +63,6 @@ export default {
     justify-content: center;
     align-items: center;
     margin-right: 35rpx;
-    .goods-select-btn {
-      color: #8a8a8a;
-      &.icon-yuanxingxuanzhongfill {
-        color: #e03440;
-      }
-    }
   }
   &__image {
     $size: 190rpx;
