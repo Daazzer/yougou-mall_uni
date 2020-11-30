@@ -3,9 +3,9 @@
     <view class="goods-item__select-bar" v-if="isShowSelectBtn">
       <icon
         size="35rpx"
-        :type="goodsSelected ? 'success' : 'circle'"
-        :color="goodsSelected ? '#e03440': '#8a8a8a'"
-        @click="$emit('select-goods')"
+        :type="goodsChecked ? 'success' : 'circle'"
+        :color="goodsChecked ? '#e03440': '#8a8a8a'"
+        @click="$emit('checked-goods')"
       />
     </view>
     <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
@@ -14,9 +14,9 @@
       <view class="goods-body">
         <view class="goods-price" v-if="goodsPrice || goodsPrice === 0">¥ {{ goodsPrice || 0 }}</view>
         <view class="goods-option" v-if="goodsNum !== '' && goodsNum">
-          <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce')" />
+          <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce-goods-num')" />
           <view class="goods-num">{{ goodsNum }}</view>
-          <text class="goods-btn iconfont icon-jiahao" @click="$emit('add')" />
+          <text class="goods-btn iconfont icon-jiahao" @click="$emit('add-goods-num')" />
         </view>
       </view>
     </view>
@@ -27,7 +27,7 @@
 export default {
   name: 'GoodsItem',
   props: {
-    goodsSelected: {
+    goodsChecked: {
       type: [Boolean, undefined],
       default: undefined
     },
@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     isShowSelectBtn () {
-      return typeof this.goodsSelected === 'boolean'
+      return typeof this.goodsChecked === 'boolean'
     }
   }
 }
@@ -74,6 +74,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex: 1;
     padding: 26rpx 0;
     margin-left: 30rpx;
     font-size: 24rpx;
