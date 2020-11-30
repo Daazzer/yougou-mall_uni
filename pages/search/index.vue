@@ -1,7 +1,7 @@
 <template>
   <view class="search">
     <view class="search-bar">
-      <view class="search-bar__input-group">        
+      <view class="search-bar__input-group">
         <text class="iconfont icon-sousuo" />
         <input type="text" v-model="searchText" placeholder="输入商品名" />
       </view>
@@ -12,10 +12,10 @@
       >{{ isSearching ? '' : '搜索' }}</button>
     </view>
     <view class="search-result-list" v-if="searchResultItems.length > 0">
-      <GoodsItem 
+      <GoodsItem
         v-for="searchResultItem in searchResultItems"
         :key="searchResultItem.goods_id"
-        :goodsImage="searchResultItem.goods_image"
+        :goodsImage="searchResultItem.goods_image || '/static/images/empty.png'"
         :goodsName="searchResultItem.goods_name"
       />
     </view>
@@ -45,16 +45,16 @@ export default {
       const [err, res] = await this.$api.getGoodsSearch({ query })
 
       this.isSearching = false
-      
+
       if (!this.isSearched) {
         this.isSearched = true
       }
-      
+
       if (err) {
         this.$showErrorTips(err, '搜索失败')
         return
       }
-      
+
       let searchResultItems = []
 
       if (res.data.message) {
@@ -69,7 +69,7 @@ export default {
       }
 
       this.isSearching = true
- 
+
       this.renderSearchResultItems()
     }
   },
