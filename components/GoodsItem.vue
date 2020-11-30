@@ -1,9 +1,26 @@
 <template>
   <view class="goods-item">
+    <view class="goods-item__select-bar" v-if="isShowSelectBtn">
+      <text
+        :class="[
+          'iconfont',
+          'goods-select-btn',
+          selectClass
+        ]"
+        @click="$emit('select-goods')"
+      />
+    </view>
     <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
     <view class="goods-item__info">
       <view class="goods-name">{{ goodsName }}</view>
-      <view class="goods-price" v-if="goodsPrice">¥ {{ goodsPrice || 0 }}</view>
+      <view class="goods-body">
+        <view class="goods-price" v-if="goodsPrice || goodsPrice === 0">¥ {{ goodsPrice || 0 }}</view>
+        <view class="goods-option" v-if="goodsNum !== '' && goodsNum">
+          <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce')" />
+          <view class="goods-num">{{ goodsNum }}</view>
+          <text class="goods-btn iconfont icon-jiahao" @click="$emit('add')" />
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -12,6 +29,10 @@
 export default {
   name: 'GoodsItem',
   props: {
+    goodsSelected: {
+      type: [Boolean, undefined],
+      default: undefined
+    },
     goodsImage: {
       type: String,
       required: true
@@ -21,7 +42,23 @@ export default {
       required: true
     },
     goodsPrice: {
-      type: String
+      type: Number
+    },
+    goodsNum: {
+      type: Number
+    }
+  },
+  computed: {
+    isShowSelectBtn () {
+      return typeof this.goodsSelected === 'boolean'
+    },
+    selectClass () {
+      const iconText = 'icon-'
+      let selectText = 'yuanxingweixuanzhong'
+      if (this.goodsSelected) {
+        selectText = 'yuanxingxuanzhongfill'
+      }
+      return iconText + selectText
     }
   }
 }
@@ -31,6 +68,18 @@ export default {
 .goods-item {
   display: flex;
   padding: 10rpx 0 10rpx 15rpx;
+  &__select-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 35rpx;
+    .goods-select-btn {
+      color: #8a8a8a;
+      &.icon-yuanxingxuanzhongfill {
+        color: #e03440;
+      }
+    }
+  }
   &__image {
     $size: 190rpx;
     width: $size;
@@ -55,6 +104,23 @@ export default {
       line-clamp: 3;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+    .goods-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      .goods-option {
+        @extend .goods-body;
+        align-items: center;
+        color: #8a8a8a;
+        .goods-num {
+          margin: 0 22rpx;
+          font-size: 30rpx;
+        }
+        .goods-btn {
+          font-size: 32rpx;
+        }
+      }
     }
   }
 }
