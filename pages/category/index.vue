@@ -1,7 +1,7 @@
 <template>
   <view class="category">
     <SearchBar isFixed />
-    <scroll-view class="category-nav-list" scroll-y="true">
+    <scroll-view class="category-nav-list" scroll-y>
       <template v-if="categoryNavItems">
         <view
           :class="{
@@ -17,7 +17,7 @@
       </template>
     </scroll-view>
     <view class="category-list">
-      <block v-if="categoryNavItems">
+      <template v-if="categoryNavItems">
         <view
           class="category-list__item"
           v-for="categoryItem in categoryNavItems[categoryNavSelected].children"
@@ -35,7 +35,7 @@
             </view>
           </view>
         </view>
-      </block>
+      </template>
     </view>
   </view>
 </template>
@@ -82,7 +82,7 @@ export default {
     this.renderCategoryNavItems()
   },
   onShow () {
-    const page = this.$mp.page  
+    const page = this.$mp.page
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {  
       page.getTabBar().setData({ currentIndex: 1 })  
     }
