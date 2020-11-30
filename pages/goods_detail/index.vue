@@ -138,50 +138,10 @@ page {
     }
   }
   &__content {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    text-overflow: ellipsis;
-    overflow: hidden;
     font-size: 30rpx;
     color: #434343;
   }
 }
-.goods-info {
-  padding: 20rpx 35rpx 48rpx;
-  margin-bottom: 19rpx;
-  background-color: #fff;
-  &__head {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20rpx;
-    .goods-price {
-      color: #ea4350;
-      font-size: 36rpx;
-    }
-    .goods-opt {
-      text {
-        font-size: 40rpx;
-        color: #707070;
-      }
-      text + text {
-       margin-left: 45rpx;
-      }
-    }
-  }
-  &__content {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 30rpx;
-    color: #434343;
-  }
-}
-
 .goods-intro {
   background-color: #fff;
   padding: 20rpx 16rpx 0;
