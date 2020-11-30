@@ -40,7 +40,8 @@ export default {
       required: true
     },
     goodsPrice: {
-      type: Number
+      type: [Number, undefined],
+      default: undefined
     },
     goodsNum: {
       type: Number
