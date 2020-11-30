@@ -48,7 +48,7 @@
           </view>
           <view class="recommend-pics">
             <view class="recommend-pics__main">
-              <navigator :url="recommendItem.product_list[0].navigator_url">
+              <navigator :url="recommendItem.product_list[0].navigator_url | goodsListUrl">
                 <image :src="recommendItem.product_list[0].image_src" />
               </navigator>
             </view>
@@ -58,7 +58,7 @@
                 :key="recommendProduct.image_src"
               >
                 <view class="recommend-pics-list__item" v-if="index > 0">
-                  <navigator :url="recommendProduct.navigator_url">
+                  <navigator :url="recommendProduct.navigator_url | goodsListUrl">
                     <image :src="recommendProduct.image_src" />
                   </navigator>
                 </view>
@@ -143,6 +143,12 @@ export default {
       }
   
       this.recommendItems = recommendItems
+    }
+  },
+  filters: {
+    goodsListUrl (url) {
+      const query = url.split('=')[1]
+      return '/pages/goods_list/index?query=' + query
     }
   },
   onLoad() {
