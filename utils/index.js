@@ -1,6 +1,6 @@
 export const getRect = selector => {
   const p = new Promise(rv => {
-    wx.createSelectorQuery().select(selector).boundingClientRect(rect => {
+    uni.createSelectorQuery().select(selector).boundingClientRect(rect => {
       rv(rect)
     }).exec()
   })
