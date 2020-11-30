@@ -90,9 +90,14 @@
     "current": 0,
     "list": [
       {
-        "name": "商品列表",
-        "path": "pages/goods_list/index",
-        "query": "cid=48"
+        "name": "购物车",
+        "path": "pages/cart/index",
+        "query": ""
+      },
+      {
+        "name": "搜索中心",
+        "path": "pages/search/index",
+        "query": ""
       }
     ]
   }
