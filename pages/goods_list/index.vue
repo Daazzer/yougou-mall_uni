@@ -27,6 +27,10 @@
       />
     </view>
     <view class="goods-list--none" v-else>暂无商品</view>
+    <view
+      class="goods-list--last-page"
+      v-if="goodsItems.length > 0 && isLastPage"
+    >到底啦...</view>
     <tab-bar ref="tabBar" />
   </view>
 </template>
@@ -65,15 +69,15 @@ export default {
     async renderGoodsItems (params) {
       this.isLoadingGoodsItems = true
       const [err, res] = await this.$api.getGoodsList(params)
-  
+
       if (err) {
         this.$showErrorTips(err, '获取商品列表数据失败')
         this.isLoadingGoodsItems = false
         return
       }
-  
+
       let goodsItems = []
-  
+
       if (res.data.message) {
         goodsItems = res.data.message.goods
       }
@@ -175,6 +179,11 @@ export default {
     text-align: center;
     font-size: 38rpx;
     color: #676767;
+  }
+  &--last-page {
+    @extend .goods-list--none;
+    margin-top: 40rpx;
+    padding-bottom: 30rpx;
   }
 }
 </style>
