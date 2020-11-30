@@ -54,7 +54,7 @@ export default {
       searchBarHeight: 0,
       params: {
         pagenum: 1,
-        pagesize: 10
+        pagesize: 15
       },
       sortSelected: 0,
       sortItems: [

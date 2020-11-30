@@ -15,7 +15,7 @@
       <GoodsItem
         v-for="searchResultItem in searchResultItems"
         :key="searchResultItem.goods_id"
-        :goodsImage="searchResultItem.goods_image || '/static/images/empty.png'"
+        :goodsImage="searchResultItem.goods_image"
         :goodsName="searchResultItem.goods_name"
       />
     </view>

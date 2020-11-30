@@ -1,6 +1,6 @@
 <template>
   <view class="goods-item">
-    <image class="goods-item__image" :src="goodsImage" />
+    <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
     <view class="goods-item__info">
       <view class="goods-name">{{ goodsName }}</view>
       <view class="goods-price" v-if="goodsPrice">¥ {{ goodsPrice || 0 }}</view>
