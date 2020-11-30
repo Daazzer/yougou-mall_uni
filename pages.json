@@ -75,14 +75,14 @@
       {
         "pagePath": "pages/cart/index",
         "text": "购物车",
-           "iconPath": "static/images/cart.png",
-           "selectedIconPath": "static/images/cart_selected.png"
+        "iconPath": "static/images/cart.png",
+        "selectedIconPath": "static/images/cart_selected.png"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-         "iconPath": "static/images/user.png",
-         "selectedIconPath": "static/images/user_selected.png"
+        "iconPath": "static/images/user.png",
+        "selectedIconPath": "static/images/user_selected.png"
       }
     ]
   },

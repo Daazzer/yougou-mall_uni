@@ -11,6 +11,6 @@ Vue.prototype.$api = api
 Vue.prototype.$showErrorTips = showErrorTips
 
 const app = new Vue({
-    ...App
+  ...App
 })
 app.$mount()
