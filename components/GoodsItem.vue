@@ -48,6 +48,14 @@ export default {
     .goods-price {
       color: #ea4350;
     }
+    .goods-name {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 }
 </style>
