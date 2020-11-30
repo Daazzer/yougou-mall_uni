@@ -23,15 +23,17 @@
           v-for="categoryItem in categoryNavItems[categoryNavSelected].children"
           :key="categoryItem.cat_id"
         >
-          <view class="category-title">/ {{ categoryItem.cat_name }} /</view>
+          <view class="category-title">/<text class="category-title__text">{{ categoryItem.cat_name }}</text>/</view>
           <view class="goods-list">
             <view
               class="goods-list__item"
               v-for="goodsItem in categoryItem.children"
               :key="goodsItem.cat_id"
             >
-              <image :src="goodsItem.cat_icon" />
-              <text>{{ goodsItem.cat_name }}</text>
+              <navigator :url="'/pages/goods_list/index?cid=' + goodsItem.cat_id">
+                <image :src="goodsItem.cat_icon" />
+                <text>{{ goodsItem.cat_name }}</text>
+              </navigator>
             </view>
           </view>
         </view>
@@ -137,20 +139,26 @@ export default {
   text-align: center;
   font-size: 26rpx;
   color: #575757;
+  &__text {
+    margin: 0 12rpx;
+    font-weight: bold;
+  }
 }
 .goods-list {
   display: flex;
   flex-wrap: wrap;
   padding: 0 48rpx;
   &__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin: 0 0 30rpx 56rpx;
     font-size: 21rpx;
     color: #2e2e2e;
     &:nth-child(3n + 1) {
       margin-left: 0;
+    }
+    navigator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     image {
       $size: 120rpx;

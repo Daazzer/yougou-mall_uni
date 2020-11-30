@@ -90,9 +90,9 @@
     "current": 0,
     "list": [
       {
-        "name": "",
-        "path": "",
-        "query": ""
+        "name": "商品列表",
+        "path": "pages/goods_list/index",
+        "query": "cid=48"
       }
     ]
   }
