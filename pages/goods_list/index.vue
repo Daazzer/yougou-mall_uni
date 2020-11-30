@@ -1,7 +1,12 @@
 <template>
-  <view :class="{ 'goods-list-container': true, 'pt-100': isSearchBarFixed }">
+  <view
+    :class="{
+      'goods-list-container': true,
+      'pt-100_88': isSearchBarFixed
+    }"
+  >
     <SearchBar id="searchBar" :isFixed="isSearchBarFixed" />
-    <view class="sort">
+    <view id="sort" :class="{ sort: true, fixed: isSearchBarFixed }">
       <view
         :class="{
           sort__item: true,
@@ -40,7 +45,13 @@ export default {
   data () {
     return {
       isSearchBarFixed: false,
-      params: {},
+      isLoadingGoodsItems: false,
+      isLastPage: false,
+      searchBarHeight: 0,
+      params: {
+        pagenum: 1,
+        pagesize: 10
+      },
       sortSelected: 0,
       sortItems: [
         { title: '综合' },
@@ -52,10 +63,12 @@ export default {
   },
   methods: {
     async renderGoodsItems (params) {
+      this.isLoadingGoodsItems = true
       const [err, res] = await this.$api.getGoodsList(params)
   
       if (err) {
         this.$showErrorTips(err, '获取商品列表数据失败')
+        this.isLoadingGoodsItems = false
         return
       }
   
@@ -65,33 +78,56 @@ export default {
         goodsItems = res.data.message.goods
       }
 
-      this.goodsItems = goodsItems
+      if (goodsItems.length < this.params.pagesize) {
+        this.isLastPage = true
+      }
+
+      if (this.params.pagenum === 1) {
+        this.goodsItems = goodsItems
+      } else {
+        this.goodsItems.push(...goodsItems)
+      }
+
+      this.isLoadingGoodsItems = false
     },
     handleSort (index) {
       this.sortSelected = index
     },
   },
   onLoad (params) {
-    this.params = params
-    this.renderGoodsItems(params)
+    this.params = {
+      ...this.params,
+      ...params
+    }
+    this.renderGoodsItems(this.params)
   },
-  onShow () {
+  async onShow () {
+    const { height: searchBarHeight } = await getRect('#searchBar')
+    this.searchBarHeight = searchBarHeight
     const tabBar = this.$refs.tabBar
     tabBar.setData({ currentIndex: 1 })
   },
   onPullDownRefresh () {
+    this.isLastPage = false
+    this.params.pagenum = 1
     Promise.all([
       this.renderGoodsItems(this.params)
     ]).then(() => uni.stopPullDownRefresh())
   },
   async onPageScroll ({ scrollTop }) {
-    const { height: searchBarHeight } = await getRect('#searchBar')
+    const searchBarHeight = this.searchBarHeight
     const isSearchBarFixed = this.isSearchBarFixed
 
     if (scrollTop >= searchBarHeight && !isSearchBarFixed) {
       this.isSearchBarFixed = true
     } else if (scrollTop <= 0 && isSearchBarFixed) {
       this.isSearchBarFixed = false
+    }
+  },
+  onReachBottom () {
+    if (!this.isLastPage && !this.isLoadingGoodsItems) {
+      this.params.pagenum++
+      this.renderGoodsItems(this.params)
     }
   }
 }
@@ -100,12 +136,17 @@ export default {
 <style lang="scss" scoped>
 .goods-list-container {
   padding-bottom: 113rpx;
+  &.pt-100_88 {
+    padding-top: 188rpx;
+  }
 }
 .sort {
   display: flex;
   justify-content: space-between;
   height: 88rpx;
   padding: 0 48rpx;
+  background-color: #fff;
+  top: 0;
   &__item {
     width: 184rpx;
     text-align: center;
@@ -117,6 +158,14 @@ export default {
       font-weight: bold;
       color: #3d3d3d;
     }
+  }
+  &.fixed {
+    position: fixed;
+    top: 100rpx;
+    left: 0;
+    right: 0;
+    transition: top .3s .5s;
+    z-index: 10;
   }
 }
 .goods-list {
