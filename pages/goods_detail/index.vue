@@ -64,11 +64,17 @@
         </navigator>
       </view>
       <view class="goods-options-bar__btn">
-        <view class="btn btn--warning">
-          <text class="badge">99+</text>
+        <view class="btn btn--warning" @click="addToCart">
+          <text class="badge" v-if="goodsNum > 0">{{ goodsNum > 99 ? '99+' : goodsNum }}</text>
           加入购物车
         </view>
-        <view class="btn btn--danger">立即购买</view>
+        <view class="btn btn--danger">
+          <navigator
+            open-type="switchTab"
+            url="/pages/cart/index"
+            @click="addToCart"
+          >立即购买</navigator>
+        </view>
       </view>
     </view>
   </view>
@@ -80,6 +86,7 @@ export default {
   data () {
     return {
       goods_id: 0,
+      goodsNum: 0,
       goodsDetail: {
         pics: []
       },
@@ -134,6 +141,52 @@ export default {
           uni.showToast({ title, icon })
         }
       })
+    },
+    addToCart () {
+      let yougou = uni.getStorageSync('yougou')
+
+      if (!yougou) {
+        yougou = {}
+      }
+
+      let cart = yougou.cart
+
+      if (!cart) {
+        cart = []
+      }
+
+      let goodsItem = cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
+      this.goodsNum++
+
+      if (!goodsItem) {
+        const { goods_id, goods_name, goods_price, goods_small_logo } = this.goodsDetail
+        goodsItem = {
+          goods_id,
+          goods_name,
+          goods_price,
+          goodsImage: goods_small_logo,
+          goodsNum: this.goodsNum
+        }
+        cart[0] = goodsItem
+      } else {
+        goodsItem.goodsNum = this.goodsNum
+        for (let i = 0; i < cart.length; i++) {
+          if (cart[i].goods_id === goodsItem.goods_id) {
+            cart[i] = goodsItem
+            break
+          }
+        }
+      }
+
+      yougou.cart = cart
+
+      uni.setStorage({
+        key: 'yougou',
+        data: yougou,
+        success: () => {
+          uni.showToast({ title: '已加入购物车' })
+        }
+      })
     }
   },
   computed: {
@@ -154,7 +207,9 @@ export default {
     }
 
     const favoriteGoods = new Set(yougou.favoriteGoods)
+    const goodsItem = yougou.cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
 
+    this.goodsNum = goodsItem.goodsNum
     this.isFavoriteGoods = favoriteGoods.has(this.goods_id) ? true : false
   },
   onPullDownRefresh () {
@@ -308,11 +363,10 @@ page {
       .badge {
         position: absolute;
         display: block;
-        right: -20rpx;
+        right: -15rpx;
         top: -10rpx;
-        width: 40rpx;
         height: 30rpx;
-        padding: 0 10rpx;
+        padding: 0 15rpx;
         border-radius: 15rpx;
         font-size: 20rpx;
         line-height: 30rpx;
