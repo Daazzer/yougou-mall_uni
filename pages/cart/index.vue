@@ -6,9 +6,9 @@
         :key="goodsItem.goods_id"
         :goodsChecked="goodsItem.checked"
         :goodsImage="goodsItem.goodsImage"
-        :goodsName="goodsItem.goodsName"
+        :goodsName="goodsItem.goods_name"
         :goodsPrice="goodsItem.goods_price"
-        :goodsNum="goodsItem.goods_number"
+        :goodsNum="goodsItem.goodsNum"
         @checked-goods="handleCheckedGoods(index)"
         @add-goods-num="handleAddGoodsNum(index)"
         @reduce-goods-num="handleReduceGoodsNum(index)"
@@ -52,37 +52,23 @@ export default {
   },
   data () {
     return {
-      goodsItems: [
-        {
-          goodsImage: '/static/images/cart.png',
-          goodsName: '电视',
-          goods_id: 129,
-          goods_number: 12,
-          goods_price: 3999,
-          checked: true
-        },
-        {
-          goodsImage: '/static/images/cart.png',
-          goodsName: '冰箱',
-          goods_id: 127,
-          goods_number: 1,
-          goods_price: 8999,
-          checked: true
-        }
-      ]
+      goodsItems: []
     }
   },
   methods: {
     handleCheckedGoods (index) {
       const checked = this.goodsItems[index].checked
       this.goodsItems[index].checked = !checked
+      this.setCart()
     },
     handleAddGoodsNum (index) {
-      this.goodsItems[index].goods_number++
+      this.goodsItems[index].goodsNum++
+      this.setCart()
     },
     handleReduceGoodsNum (index) {
-      if (this.goodsItems[index].goods_number > 1) {
-        this.goodsItems[index].goods_number--
+      if (this.goodsItems[index].goodsNum > 1) {
+        this.goodsItems[index].goodsNum--
+        this.setCart()
       }
     },
     checkedAll () {
@@ -102,6 +88,18 @@ export default {
           }
         })
       }
+      this.setCart()
+    },
+    setCart () {
+      let yougou = uni.getStorageSync('yougou')
+
+      if (!yougou) {
+        yougou = {}
+      }
+
+      yougou.cart = this.goodsItems
+
+      uni.setStorageSync('yougou', yougou)
     },
     deleteGoodsItems () {
       if (this.checkedGoodsNum <= 0) {
@@ -130,7 +128,7 @@ export default {
     order_price () {
       return this.goodsItems.reduce((totalPrice, goodsItem) => {
         if (goodsItem.checked) {
-          totalPrice += goodsItem.goods_price * goodsItem.goods_number
+          totalPrice += goodsItem.goods_price * goodsItem.goodsNum
         }
         return totalPrice
       }, 0)
@@ -138,7 +136,7 @@ export default {
     goodsTotalNum () {
       return this.goodsItems.reduce((totalNum, goodsItem) => {
         if (goodsItem.checked) {
-          totalNum += goodsItem.goods_number
+          totalNum += goodsItem.goodsNum
         }
         return totalNum
       }, 0)
@@ -157,6 +155,16 @@ export default {
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {
       page.getTabBar().setData({ currentIndex: 2 })
     }
+
+    const yougou = uni.getStorageSync('yougou')
+
+    if (!yougou) {
+      return
+    }
+
+    const goodsItems = yougou.cart
+
+    this.goodsItems = goodsItems ? goodsItems : []
   }
 }
 </script>

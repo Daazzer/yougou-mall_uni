@@ -133,14 +133,10 @@ export default {
         favoriteGoods.delete(goods_id)
       }
       yougou.favoriteGoods = [...favoriteGoods]
-      uni.setStorage({
-        key: 'yougou',
-        data: yougou,
-        success: () => {
-          this.isFavoriteGoods = icon === 'success' ? true : false
-          uni.showToast({ title, icon })
-        }
-      })
+
+      uni.setStorageSync('yougou', yougou)
+      this.isFavoriteGoods = icon === 'success' ? true : false
+      uni.showToast({ title, icon })
     },
     addToCart () {
       let yougou = uni.getStorageSync('yougou')
@@ -161,13 +157,14 @@ export default {
       if (!goodsItem) {
         const { goods_id, goods_name, goods_price, goods_small_logo } = this.goodsDetail
         goodsItem = {
+          checked: true,
           goods_id,
           goods_name,
           goods_price,
           goodsImage: goods_small_logo,
           goodsNum: this.goodsNum
         }
-        cart[0] = goodsItem
+        cart.push(goodsItem)
       } else {
         goodsItem.goodsNum = this.goodsNum
         for (let i = 0; i < cart.length; i++) {
@@ -180,13 +177,8 @@ export default {
 
       yougou.cart = cart
 
-      uni.setStorage({
-        key: 'yougou',
-        data: yougou,
-        success: () => {
-          uni.showToast({ title: '已加入购物车' })
-        }
-      })
+      uni.setStorageSync('yougou', yougou)  // 如果异步修改会导致跨页面的时候数据不能实时更新
+      uni.showToast({ title: '已加入购物车' })
     }
   },
   computed: {
@@ -200,16 +192,19 @@ export default {
     this.renderGoodsDetail(Number(goods_id))
   },
   onShow () {
-    let yougou = uni.getStorageSync('yougou')
+    const yougou = uni.getStorageSync('yougou')
 
     if (!yougou) {
-      yougou = {}
+      return
     }
 
     const favoriteGoods = new Set(yougou.favoriteGoods)
-    const goodsItem = yougou.cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
 
-    this.goodsNum = goodsItem.goodsNum
+    if (yougou.cart) {
+      const goodsItem = yougou.cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
+      this.goodsNum = goodsItem ? goodsItem.goodsNum : 0
+    }
+
     this.isFavoriteGoods = favoriteGoods.has(this.goods_id) ? true : false
   },
   onPullDownRefresh () {
