@@ -14,6 +14,7 @@ export default {
 }
 
 view,
+button,
 scroll-view,
 navigator,
 input,

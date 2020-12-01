@@ -27,9 +27,10 @@
             open-type="share"
           />
           <button
-            class="iconfont icon-shoucang"
+            :class="['iconfont', 'icon-' + favoriteClass]"
             plain
             size="mini"
+            @click="favoriteGoods"
           />
         </view>
       </view>
@@ -45,17 +46,28 @@
     <view class="goods-intro--none" v-else>暂无图文详情</view>
     <view class="goods-options-bar">
       <view class="goods-options-bar__opt">
-        <view class="goods-options-opt-item">
+        <button
+          class="goods-options-opt-item"
+          open-type="contact"
+          plain
+        >
           <text class="iconfont icon-kefu icon" />
           <text class="goods-options-opt-item__text">联系客服</text>
-        </view>
-        <view class="goods-options-opt-item">
+        </button>
+        <navigator
+          class="goods-options-opt-item"
+          open-type="switchTab"
+          url="/pages/cart/index"
+        >
           <text class="iconfont icon-gouwuche icon" />
           <text class="goods-options-opt-item__text">购物车</text>
-        </view>
+        </navigator>
       </view>
       <view class="goods-options-bar__btn">
-        <view class="btn btn--warning">加入购物车</view>
+        <view class="btn btn--warning">
+          <text class="badge">99+</text>
+          加入购物车
+        </view>
         <view class="btn btn--danger">立即购买</view>
       </view>
     </view>
@@ -67,10 +79,11 @@ export default {
   name: 'GoodsDetail',
   data () {
     return {
-      goods_id: '',
+      goods_id: 0,
       goodsDetail: {
         pics: []
-      }
+      },
+      isFavoriteGoods: false
     }
   },
   methods: {
@@ -92,12 +105,57 @@ export default {
     },
     previewGoodsImages (urls, current) {
       uni.previewImage({ urls, current })
+    },
+    favoriteGoods () {
+      const goods_id = this.goods_id
+      let title = '收藏成功'
+      let icon = 'success'
+      let yougou = uni.getStorageSync('yougou')
+
+      if (!yougou) {
+        yougou = {}
+      }
+
+      const favoriteGoods = new Set(yougou.favoriteGoods)
+
+      if (!favoriteGoods.has(goods_id)) {
+        favoriteGoods.add(goods_id)
+      } else {
+        title = '取消收藏'
+        icon = 'none'
+        favoriteGoods.delete(goods_id)
+      }
+      yougou.favoriteGoods = [...favoriteGoods]
+      uni.setStorage({
+        key: 'yougou',
+        data: yougou,
+        success: () => {
+          this.isFavoriteGoods = icon === 'success' ? true : false
+          uni.showToast({ title, icon })
+        }
+      })
+    }
+  },
+  computed: {
+    favoriteClass () {
+      return this.isFavoriteGoods ? 'shoucang1' : 'shoucang'
     }
   },
   onLoad ({ goods_id }) {
     uni.showShareMenu({ withShareTicket: true })
-    this.goods_id = goods_id
-    this.renderGoodsDetail(goods_id)
+    this.goods_id = Number(goods_id)
+    this.renderGoodsDetail(Number(goods_id))
+  },
+  onShow () {
+    let yougou = uni.getStorageSync('yougou')
+
+    if (!yougou) {
+      yougou = {}
+    }
+
+    const favoriteGoods = new Set(yougou.favoriteGoods)
+
+    this.isFavoriteGoods = favoriteGoods.has(this.goods_id) ? true : false
   },
   onPullDownRefresh () {
     Promise
@@ -168,6 +226,9 @@ page {
       button + button {
         margin-left: 45rpx;
       }
+      .icon-shoucang1 {
+        color: #fcaa23;
+      }
     }
   }
   &__content {
@@ -209,7 +270,13 @@ page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #434343;
+    padding: 0;
+    border: none;
+    line-height: normal;
+    border-radius: 0;
+    text {
+      color: #434343;
+    }
     & + .goods-options-opt-item {
       margin-left: 50rpx;
     }
@@ -225,6 +292,7 @@ page {
   &__btn {
     display: flex;
     .btn {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -236,6 +304,20 @@ page {
       color: #fff;
       & + .btn {
         margin-left: 22rpx;
+      }
+      .badge {
+        position: absolute;
+        display: block;
+        right: -20rpx;
+        top: -10rpx;
+        width: 40rpx;
+        height: 30rpx;
+        padding: 0 10rpx;
+        border-radius: 15rpx;
+        font-size: 20rpx;
+        line-height: 30rpx;
+        text-align: center;
+        background-color: #ff2d2d;
       }
     }
   }
