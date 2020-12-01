@@ -8,10 +8,11 @@
       <template v-if="goodsDetail.pics">
         <swiper-item
           class="goods-pics__item"
-          v-for="goodsPic in goodsDetail.pics"
+          v-for="(goodsPic, index) in goodsDetail.pics"
           :key="goodsPic.pics_id"
+          @click="previewGoodsImages(goodsDetail.pics.map(v => v.pics_big), goodsDetail.pics[index].pics_big)"
         >
-          <image :src="goodsPic.pics_big || '/static/images/empty.png'" />
+          <image :src="goodsPic.pics_mid || '/static/images/empty.png'" />
         </swiper-item>
       </template>
     </swiper>
@@ -19,8 +20,17 @@
       <view class="goods-info__head">
         <view class="goods-price">&yen;{{ goodsDetail.goods_price || 0 }}</view>
         <view class="goods-opt">
-          <text class="iconfont icon-iconfontfenxiang" />
-          <text class="iconfont icon-shoucang" />
+          <button
+            class="iconfont icon-iconfontfenxiang"
+            plain
+            size="mini"
+            open-type="share"
+          />
+          <button
+            class="iconfont icon-shoucang"
+            plain
+            size="mini"
+          />
         </view>
       </view>
       <view class="goods-info__content">{{ goodsDetail.goods_name }}</view>
@@ -58,7 +68,9 @@ export default {
   data () {
     return {
       goods_id: '',
-      goodsDetail: {}
+      goodsDetail: {
+        pics: []
+      }
     }
   },
   methods: {
@@ -77,9 +89,13 @@ export default {
       }
 
       this.goodsDetail = goodsDetail
+    },
+    previewGoodsImages (urls, current) {
+      uni.previewImage({ urls, current })
     }
   },
   onLoad ({ goods_id }) {
+    uni.showShareMenu({ withShareTicket: true })
     this.goods_id = goods_id
     this.renderGoodsDetail(goods_id)
   },
@@ -87,6 +103,18 @@ export default {
     Promise
       .all([this.renderGoodsDetail(this.goods_id)])
       .then(() => uni.stopPullDownRefresh())
+  },
+  onShareAppMessage () {
+    return {
+      title: this.goodsDetail.goods_name,
+      imageUrl: this.goodsDetail.goods_big_logo
+    }
+  },
+  onAddToFavorites () {
+    return {
+      title: this.goodsDetail.goods_name,
+      imageUrl: this.goodsDetail.goods_big_logo
+    }
   }
 }
 </script>
@@ -124,15 +152,20 @@ page {
     justify-content: space-between;
     margin-bottom: 20rpx;
     .goods-price {
-      color: #ea4350;
+      margin-top: 16rpx;
       font-size: 36rpx;
+      color: #ea4350;
     }
     .goods-opt {
-      text {
+      button {
+        display: inline;
+        padding: 0;
         font-size: 40rpx;
         color: #707070;
+        border: none;
+        line-height: none;
       }
-      text + text {
+      button + button {
         margin-left: 45rpx;
       }
     }

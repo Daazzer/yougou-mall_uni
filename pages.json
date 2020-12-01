@@ -91,6 +91,11 @@
     "current": 0,
     "list": [
       {
+        "name": "商品详情",
+        "path": "pages/goods_detail/index",
+        "query": "goods_id=3028"
+      },
+      {
         "name": "购物车",
         "path": "pages/cart/index",
         "query": ""
