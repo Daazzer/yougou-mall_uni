@@ -91,6 +91,7 @@ export default {
   right: 0;
   display: flex;
   justify-content: space-between;
+  height: 83rpx;
   padding: 15rpx 22rpx;
   border-top: 1px solid #fafafa;
   background-color: #fff;
