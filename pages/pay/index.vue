@@ -3,20 +3,19 @@
     <view class="delivery-address">
       <button class="delivery-address__btn" size="mini" plain>选择地址</button>
     </view>
-    <view class="goods-list">
-      <view class="goods-list__title">已选商品</view>
+    <view class="checked-goods-list">
+      <view class="checked-goods-list__title">已选商品</view>
       <GoodsItem
-        goodsName="项目 'yougou-mall_uni' 编译成功。前端运行日志，请另行在小程序开发工具的控制台查看。"
-        :goodsPrice="3000"
-        :goodsCount="1"
-      />
-      <GoodsItem
-        goodsName="项目 'yougou-mall_uni' 编译成功。前端运行日志，请另行在小程序开发工具的控制台查看。"
-        :goodsPrice="3000"
-        :goodsCount="1"
+        v-for="checkedGoodsItem in checkedGoodsItems"
+        :key="checkedGoodsItem.goods_id"
+        :url="'/pages/goods_detail/index?goods_id=' + checkedGoodsItem.goods_id"
+        :goodsImage="checkedGoodsItem.goodsImage"
+        :goodsName="checkedGoodsItem.goods_name"
+        :goodsPrice="checkedGoodsItem.goods_price"
+        :goodsCount="checkedGoodsItem.goodsNum"
       />
     </view>
-    <GoodsCalcBar>
+    <GoodsCalcBar :totalPrice="totalPrice" :checkedNum="checkedGoodsNum">
       <template>去支付</template>
     </GoodsCalcBar>
   </view>
@@ -31,6 +30,32 @@ export default {
   components: {
     GoodsItem,
     GoodsCalcBar
+  },
+  data () {
+    return {
+      checkedGoodsItems: []
+    }
+  },
+  computed: {
+    totalPrice () {
+      return this.checkedGoodsItems.reduce((totalPrice, checkedGoodsItem) => {
+        return totalPrice += checkedGoodsItem.goods_price * checkedGoodsItem.goodsNum
+      }, 0)
+    },
+    checkedGoodsNum () {
+      return this.checkedGoodsItems.length
+    },
+  },
+  onShow () {
+    const yougou = uni.getStorageSync('yougou')
+
+    if (!yougou) {
+      return
+    }
+
+    const goodsItems = yougou.cart
+
+    this.checkedGoodsItems = goodsItems ? goodsItems.filter(goodsItem => goodsItem.checked) : []
   }
 }
 </script>
@@ -43,9 +68,9 @@ page {
 
 <style lang="scss" scoped>
 .pay {
-  padding: 20rpx 20rpx 0;
+  padding: 20rpx 20rpx 90rpx;
 }
-.delivery-address, .goods-list {
+.delivery-address, .checked-goods-list {
   background-color: #fff;
 }
 .delivery-address {
@@ -68,7 +93,7 @@ page {
     font-weight: 600;
   }
 }
-.goods-list {
+.checked-goods-list {
   padding-right: 13rpx;
   &__title {
     padding: 17rpx 0 17rpx 26rpx;
