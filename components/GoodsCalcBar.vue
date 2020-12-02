@@ -29,7 +29,7 @@
           'settle-btn': true,
           disabled: disabledSettleBtn
         }"
-        @click="linkTo(url)"
+        @click="handleSettle"
       >
         <slot></slot>({{ checkedNum }})
       </button>
@@ -68,16 +68,12 @@ export default {
     disabledSettleBtn: {
       type: Boolean,
       default: true
-    },
-    url: {
-      type: String,
-      default: ''
     }
   },
   methods: {
-    linkTo (url) {
-      if (url && !this.disabledSettleBtn) {
-        uni.navigateTo({ url })
+    handleSettle () {
+      if (!this.disabledSettleBtn) {
+        this.$emit('settle')
       }
     }
   }
