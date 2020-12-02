@@ -349,7 +349,7 @@ page {
       left: 38rpx;
       top: -15rpx;
       height: 30rpx;
-      padding: 2rpx 10rpx;
+      padding: 0 10rpx;
       border-radius: 15rpx;
       font-size: 20rpx;
       line-height: 30rpx;
