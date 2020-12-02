@@ -149,6 +149,7 @@ export default {
     const yougou = uni.getStorageSync('yougou')
 
     if (!yougou) {
+      this.goodsItems = []
       return
     }
 
