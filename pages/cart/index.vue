@@ -4,6 +4,7 @@
       <GoodsItem
         v-for="(goodsItem, index) in goodsItems"
         :key="goodsItem.goods_id"
+        :url="'/pages/goods_detail/index?goods_id=' + goodsItem.goods_id"
         :goodsChecked="goodsItem.checked"
         :goodsImage="goodsItem.goodsImage"
         :goodsName="goodsItem.goods_name"
@@ -15,43 +16,32 @@
       />
     </view>
     <view class="cart-list--none" v-else>购物车空空如也...</view>
-    <view class="total-bar">
-      <view class="total-bar__opt-group">
-        <view class="select-all-btn" @click="checkedAll">
-          <icon
-            :type="isCheckedAll ? 'success': 'circle'"
-            :color="isCheckedAll ? '#e03440' : ''"
-            size="35rpx"
-          />
-          <label>全选</label>
-        </view>
-        <view class="total">
-          <text class="total__text">合计：</text>
-          <text class="total__price">&yen;{{ order_price }}</text>
-        </view>
-      </view>
-      <view class="total-bar__btn-group">
-        <button
-          class="del-btn"
-          v-if="goodsItems.length > 0"
-          @click="deleteGoodsItems"
-        >删除({{ checkedGoodsNum }})</button>
-        <button :class="{
-          'settle-btn': true,
-          disabled: isDisabled
-        }">去结算({{ checkedGoodsNum }})</button>
-      </view>
-    </view>
+    <GoodsCalcBar
+      bottom="113rpx"
+      checkedAllBtn
+      url="/pages/pay/index"
+      :deleteBtn="deleteBtn"
+      :isCheckedAll="isCheckedAll"
+      :totalPrice="order_price"
+      :checkedNum="checkedGoodsNum"
+      :disabledSettleBtn="disabledSettleBtn"
+      @checked-all="checkedAll"
+      @delete="deleteGoodsItems"
+    >
+      <template>去结算</template>
+    </GoodsCalcBar>
   </view>
 </template>
 
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
+import GoodsCalcBar from '../../components/GoodsCalcBar.vue'
 
 export default {
   name: 'Cart',
   components: {
-    GoodsItem
+    GoodsItem,
+    GoodsCalcBar
   },
   data () {
     return {
@@ -146,9 +136,12 @@ export default {
         return checkedNum
       }, 0)
     },
-    isDisabled () {
+    deleteBtn () {
+      return this.goodsItems.length > 0
+    },
+    disabledSettleBtn () {
       return this.goodsItems.length <= 0
-    }
+    },
   },
   onShow () {
     const page = this.$mp.page
@@ -179,73 +172,6 @@ export default {
       padding-top: 300rpx;
       font-size: 38rpx;
       color: #8a8a8a;
-    }
-  }
-}
-.total-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 113rpx;
-  display: flex;
-  justify-content: space-between;
-  padding: 15rpx 22rpx;
-  border-top: 1px solid #fafafa;
-  &__opt-group {
-    display: flex;
-    align-items: center;
-    .select-all-btn {
-      display: flex;
-      align-items: flex-end;
-      margin-right: 36rpx;
-      label {
-        margin-left: 24rpx;
-        margin-bottom: 3rpx;
-        font-size: 21rpx;
-        color: #8a8a8a;
-      }
-    }
-    .total {
-      $fontSize: 26rpx;
-      font-size: $fontSize;
-      font-weight: 600;
-      &__text {
-        margin-right: 10rpx;
-        color: #292929;
-      }
-      &__price {
-        color: #ea4350;
-        font-size: $fontSize + 2rpx;
-      }
-    }
-  }
-  &__btn-group {
-    display: flex;
-    align-items: center;
-    %btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 52rpx;
-      padding: 0;
-      margin: 0;
-      border-radius: 26rpx;
-      font-size: 21rpx;
-      color: #fff;
-    }
-    .del-btn {
-      @extend %btn;
-      width: 120rpx;
-      background-color: #fcaa23;
-    }
-    .settle-btn {
-      @extend %btn;
-      margin-left: 30rpx;
-      width: 150rpx;
-      background-color: #ea4350;
-      &.disabled {
-        background-color: #b6b6b6;
-      }
     }
   }
 }
