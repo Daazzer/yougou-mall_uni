@@ -105,7 +105,7 @@
       {
         "name": "商品详情",
         "path": "pages/goods_detail/index",
-        "query": "goods_id=3028"
+        "query": "goods_id=15713"
       },
       {
         "name": "购物车",
