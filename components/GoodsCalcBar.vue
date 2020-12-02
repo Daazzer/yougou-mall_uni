@@ -93,6 +93,7 @@ export default {
   justify-content: space-between;
   padding: 15rpx 22rpx;
   border-top: 1px solid #fafafa;
+  background-color: #fff;
   &__opt-group {
     display: flex;
     align-items: center;
