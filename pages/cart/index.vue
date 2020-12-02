@@ -22,9 +22,9 @@
       url="/pages/pay/index"
       :deleteBtn="deleteBtn"
       :isCheckedAll="isCheckedAll"
-      :totalPrice="order_price"
+      :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
-      :disabledSettleBtn="disabledSettleBtn"
+      :disabledSettleBtn="checkedGoodsNum <= 0"
       @checked-all="checkedAll"
       @delete="deleteGoodsItems"
     >
@@ -35,7 +35,7 @@
 
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
-import GoodsCalcBar from '../../components/GoodsCalcBar.vue'
+import GoodsCalcBar from '@/components/GoodsCalcBar.vue'
 
 export default {
   name: 'Cart',
@@ -112,7 +112,7 @@ export default {
       }
       return this.goodsItems.every(goodsItem => goodsItem.checked)
     },
-    order_price () {
+    totalPrice () {
       return this.goodsItems.reduce((totalPrice, goodsItem) => {
         if (goodsItem.checked) {
           totalPrice += goodsItem.goods_price * goodsItem.goodsNum
@@ -138,10 +138,7 @@ export default {
     },
     deleteBtn () {
       return this.goodsItems.length > 0
-    },
-    disabledSettleBtn () {
-      return this.goodsItems.length <= 0
-    },
+    }
   },
   onShow () {
     const page = this.$mp.page
