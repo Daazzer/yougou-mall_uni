@@ -75,19 +75,12 @@ export default {
       if (this.goodsItems.length <= 0) {
         return
       }
-      if (this.isCheckedAll) {
-        this.goodsItems.forEach(goodsItem => {
-          if (goodsItem.checked) {
-            goodsItem.checked = false
-          }
-        })
-      } else {
-        this.goodsItems.forEach(goodsItem => {
-          if (!goodsItem.checked) {
-            goodsItem.checked = true
-          }
-        })
-      }
+      const checked = this.isCheckedAll
+      this.goodsItems.forEach(goodsItem => {
+        if (goodsItem.checked === checked) {
+          goodsItem.checked = !checked
+        }
+      })
       this.setCart()
     },
     setCart () {
@@ -113,6 +106,7 @@ export default {
           if (res.confirm) {
             const reserveGoodsItems = this.goodsItems.filter(goodsItem => !goodsItem.checked)
             this.goodsItems = reserveGoodsItems
+            this.setCart()
           }
         }
       })
