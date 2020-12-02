@@ -1,5 +1,5 @@
 <template>
-  <navigator class="goods-item" :url="url">
+  <view class="goods-item">
     <view class="goods-item__select-bar" v-if="isShowSelectBtn">
       <icon
         size="35rpx"
@@ -8,22 +8,24 @@
         @click="$emit('checked-goods')"
       />
     </view>
-    <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
-    <view class="goods-item__info">
-      <view class="goods-name">{{ goodsName }}</view>
-      <view class="goods-body">
-        <view class="goods-price" v-if="goodsPrice || goodsPrice === 0">¥ {{ goodsPrice || 0 }}</view>
-        <view class="goods-option" v-if="goodsNum !== '' && goodsNum">
-          <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce-goods-num')" />
-          <view class="goods-num">{{ goodsNum }}</view>
-          <text class="goods-btn iconfont icon-jiahao" @click="$emit('add-goods-num')" />
-        </view>
-        <view class="goods-count" v-if="goodsCount || goodsCount === 0">
-          &times;{{ goodsCount }}
+    <navigator class="goods-item-link" :url="url">
+      <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
+      <view class="goods-item__info">
+        <view class="goods-name">{{ goodsName }}</view>
+        <view class="goods-body">
+          <view class="goods-price" v-if="goodsPrice || goodsPrice === 0">¥ {{ goodsPrice || 0 }}</view>
+          <view class="goods-count" v-if="goodsCount || goodsCount === 0">
+            &times;{{ goodsCount }}
+          </view>
         </view>
       </view>
+    </navigator>
+    <view class="goods-item__option" v-if="goodsNum !== '' && goodsNum">
+      <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce-goods-num')" />
+      <view class="goods-num">{{ goodsNum }}</view>
+      <text class="goods-btn iconfont icon-jiahao" @click="$emit('add-goods-num')" />
     </view>
-  </navigator>
+  </view>
 </template>
 
 <script>
@@ -68,8 +70,11 @@ export default {
 
 <style lang="scss" scoped>
 .goods-item {
-  display: flex;
+  position: relative;
   padding: 10rpx 0 10rpx 15rpx;
+  &, &-link {
+    display: flex;
+  }
   &__select-bar {
     display: flex;
     justify-content: center;
@@ -83,6 +88,7 @@ export default {
     flex-shrink: 0;
   }
   &__info {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -103,25 +109,31 @@ export default {
       overflow: hidden;
     }
     .goods-body {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      .goods-option {
-        @extend .goods-body;
-        align-items: center;
-        color: #8a8a8a;
-        .goods-num {
-          margin: 0 22rpx;
-          font-size: 30rpx;
-        }
-        .goods-btn {
-          font-size: 32rpx;
-        }
-      }
       .goods-count {
         margin-right: 13rpx;
         font-size: 28rpx;
       }
+    }
+  }
+  &__info .goods-body,
+  &__option {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  &__option {
+    position: absolute;
+    align-items: center;
+    right: 13rpx;
+    bottom: 33rpx;
+    color: #8a8a8a;
+    z-index: 10;
+    .goods-num {
+      margin: 0 22rpx;
+      font-size: 30rpx;
+    }
+    .goods-btn {
+      font-size: 32rpx;
     }
   }
 }
