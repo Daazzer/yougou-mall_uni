@@ -2,8 +2,8 @@
   <view class="goods-detail">
     <swiper
       class="goods-pics"
-      :indicator-dots="goodsDetail.pics.length > 0"
       indicator-active-color="#ea4350"
+      :indicator-dots="goodsDetail.pics.length > 0"
     >
       <template v-if="goodsDetail.pics.length > 0">
         <swiper-item
@@ -137,10 +137,11 @@ export default {
         icon = 'none'
         favoriteGoods.delete(goods_id)
       }
+
       yougou.favoriteGoods = [...favoriteGoods]
 
       uni.setStorageSync('yougou', yougou)
-      this.isFavoriteGoods = icon === 'success' ? true : false
+      this.isFavoriteGoods = icon === 'success'
       uni.showToast({ title, icon })
     },
     addToCart () {
@@ -160,7 +161,13 @@ export default {
       this.goodsNum++
 
       if (!goodsItem) {
-        const { goods_id, goods_name, goods_price, goods_small_logo } = this.goodsDetail
+        const {
+          goods_id,
+          goods_name,
+          goods_price,
+          goods_small_logo
+        } = this.goodsDetail
+
         goodsItem = {
           checked: true,
           goods_id,
@@ -210,7 +217,7 @@ export default {
       this.goodsNum = goodsItem ? goodsItem.goodsNum : 0
     }
 
-    this.isFavoriteGoods = favoriteGoods.has(this.goods_id) ? true : false
+    this.isFavoriteGoods = favoriteGoods.has(this.goods_id)
   },
   onPullDownRefresh () {
     Promise
@@ -342,7 +349,7 @@ page {
       left: 38rpx;
       top: -15rpx;
       height: 30rpx;
-      padding: 2rpx 8rpx;
+      padding: 2rpx 10rpx;
       border-radius: 15rpx;
       font-size: 20rpx;
       line-height: 30rpx;
