@@ -29,6 +29,7 @@
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
       :disabledSettleBtn="!(hasReceiverInfo && checkedGoodsNum > 0)"
+      @settle="pay"
     >
       <template>去支付</template>
     </GoodsCalcBar>
@@ -88,6 +89,22 @@ export default {
           uni.setStorageSync('yougou', yougou)
         }
       })
+    },
+    pay () {
+      // TODO 需要后台的信息，先完成登录页
+      /* uni.requestPayment({
+        timeStamp: '',
+        nonceStr: '',
+        package: '',
+        signType: 'MD5',
+        paySign: '',
+        success (res) {
+          console.log(res)
+        },
+        fail (res) {
+          console.log(res)
+        }
+      }) */
     }
   },
   computed: {
