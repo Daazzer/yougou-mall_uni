@@ -19,7 +19,6 @@
     <GoodsCalcBar
       bottom="113rpx"
       checkedAllBtn
-      url="/pages/pay/index"
       :deleteBtn="deleteBtn"
       :isCheckedAll="isCheckedAll"
       :totalPrice="totalPrice"
@@ -27,6 +26,7 @@
       :disabledSettleBtn="checkedGoodsNum <= 0"
       @checked-all="checkedAll"
       @delete="deleteGoodsItems"
+      @settle="goToPay"
     >
       <template>去结算</template>
     </GoodsCalcBar>
@@ -103,6 +103,9 @@ export default {
           }
         }
       })
+    },
+    goToPay () {
+      uni.navigateTo({ url: '/pages/pay/index' })
     }
   },
   computed: {
