@@ -22,4 +22,9 @@ swiper,
 image {
   box-sizing: border-box;
 }
+button {
+  &, &[size="mini"] {
+    line-height: normal;
+  }
+}
 </style>
