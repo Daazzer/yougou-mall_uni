@@ -12,14 +12,13 @@
       >{{ isSearching ? '' : '搜索' }}</button>
     </view>
     <view class="search-result-list" v-if="searchResultItems.length > 0">
-      <block v-for="searchResultItem in searchResultItems" :key="searchResultItem.goods_id">
-        <navigator :url="'/pages/goods_detail/index?goods_id=' + searchResultItem.goods_id">
-          <GoodsItem
-            :goodsImage="searchResultItem.goods_image"
-            :goodsName="searchResultItem.goods_name"
-          />
-        </navigator>
-      </block>
+      <GoodsItem
+        v-for="searchResultItem in searchResultItems"
+        :key="searchResultItem.goods_id"
+        :url="'/pages/goods_detail/index?goods_id=' + searchResultItem.goods_id"
+        :goodsImage="searchResultItem.goods_image"
+        :goodsName="searchResultItem.goods_name"
+      />
     </view>
     <view class="search-result-list--none" v-else>{{ resultNoneText }}</view>
   </view>

@@ -18,15 +18,14 @@
       >{{ sortItem.title }}</view>
     </view>
     <view class="goods-list" v-if="goodsItems.length > 0">
-      <block v-for="goodsItem in goodsItems" :key="goodsItem.goods_id">
-        <navigator :url="'/pages/goods_detail/index?goods_id=' + goodsItem.goods_id">
-          <GoodsItem
-            :goodsImage="goodsItem.goods_small_logo"
-            :goodsName="goodsItem.goods_name"
-            :goodsPrice="goodsItem.goods_price"
-          />
-        </navigator>
-      </block>
+      <GoodsItem
+        v-for="goodsItem in goodsItems"
+        :key="goodsItem.goods_id"
+        :url="'/pages/goods_detail/index?goods_id=' + goodsItem.goods_id"
+        :goodsImage="goodsItem.goods_small_logo"
+        :goodsName="goodsItem.goods_name"
+        :goodsPrice="goodsItem.goods_price"
+      />
     </view>
     <view class="goods-list--none" v-else>暂无商品</view>
     <view

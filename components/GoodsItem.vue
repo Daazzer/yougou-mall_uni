@@ -1,5 +1,5 @@
 <template>
-  <view class="goods-item">
+  <navigator class="goods-item" :url="url">
     <view class="goods-item__select-bar" v-if="isShowSelectBtn">
       <icon
         size="35rpx"
@@ -18,15 +18,22 @@
           <view class="goods-num">{{ goodsNum }}</view>
           <text class="goods-btn iconfont icon-jiahao" @click="$emit('add-goods-num')" />
         </view>
+        <view class="goods-count" v-if="goodsCount || goodsCount === 0">
+          &times;{{ goodsCount }}
+        </view>
       </view>
     </view>
-  </view>
+  </navigator>
 </template>
 
 <script>
 export default {
   name: 'GoodsItem',
   props: {
+    url: {
+      type: String,
+      required: true
+    },
     goodsChecked: {
       type: [Boolean, undefined],
       default: undefined
@@ -45,6 +52,10 @@ export default {
     },
     goodsNum: {
       type: Number
+    },
+    goodsCount: {
+      type: [Number, undefined],
+      default: undefined
     }
   },
   computed: {
@@ -106,6 +117,10 @@ export default {
         .goods-btn {
           font-size: 32rpx;
         }
+      }
+      .goods-count {
+        margin-right: 13rpx;
+        font-size: 28rpx;
       }
     }
   }
