@@ -5,14 +5,19 @@
       indicator-dots
       indicator-active-color="#ea4350"
     >
-      <template v-if="goodsDetail.pics">
+      <template v-if="goodsDetail.pics.length > 0">
         <swiper-item
           class="goods-pics__item"
           v-for="(goodsPic, index) in goodsDetail.pics"
           :key="goodsPic.pics_id"
           @click="previewGoodsImages(goodsDetail.pics.map(v => v.pics_big), goodsDetail.pics[index].pics_big)"
         >
-          <image :src="goodsPic.pics_mid || '/static/images/empty.png'" />
+          <image :src="goodsPic.pics_mid" />
+        </swiper-item>
+      </template>
+      <template v-else>
+        <swiper-item class="goods-pics__item">
+          <image src="/static/images/empty.png" />
         </swiper-item>
       </template>
     </swiper>
