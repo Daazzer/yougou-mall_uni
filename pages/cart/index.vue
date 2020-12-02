@@ -36,7 +36,10 @@
           v-if="goodsItems.length > 0"
           @click="deleteGoodsItems"
         >删除({{ checkedGoodsNum }})</button>
-        <button class="settle-btn">去结算({{ checkedGoodsNum }})</button>
+        <button :class="{
+          'settle-btn': true,
+          disabled: isDisabled
+        }">去结算({{ checkedGoodsNum }})</button>
       </view>
     </view>
   </view>
@@ -142,6 +145,9 @@ export default {
         }
         return checkedNum
       }, 0)
+    },
+    isDisabled () {
+      return this.goodsItems.length <= 0
     }
   },
   onShow () {
@@ -237,6 +243,9 @@ export default {
       margin-left: 30rpx;
       width: 150rpx;
       background-color: #ea4350;
+      &.disabled {
+        background-color: #b6b6b6;
+      }
     }
   }
 }
