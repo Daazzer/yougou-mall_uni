@@ -99,6 +99,7 @@ export default {
   height: 90rpx;
   padding: 15rpx 18rpx;
   background-color: #fff;
+  z-index: 100;
   &__input-group {
     position: relative;
     margin-right: 15rpx;
