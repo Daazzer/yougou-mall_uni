@@ -2,7 +2,7 @@
   <view class="goods-detail">
     <swiper
       class="goods-pics"
-      indicator-dots
+      :indicator-dots="goodsDetail.pics.length > 0"
       indicator-active-color="#ea4350"
     >
       <template v-if="goodsDetail.pics.length > 0">
@@ -66,11 +66,11 @@
         >
           <text class="iconfont icon-gouwuche icon" />
           <text class="goods-options-opt-item__text">购物车</text>
+          <text class="badge" v-if="goodsNum > 0">{{ goodsNum > 99 ? '99+' : goodsNum }}</text>
         </navigator>
       </view>
       <view class="goods-options-bar__btn">
         <view class="btn btn--warning" @click="addToCart">
-          <text class="badge" v-if="goodsNum > 0">{{ goodsNum > 99 ? '99+' : goodsNum }}</text>
           加入购物车
         </view>
         <view class="btn btn--danger">
@@ -322,6 +322,7 @@ page {
     display: flex;
   }
   .goods-options-opt-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -334,6 +335,20 @@ page {
     }
     & + .goods-options-opt-item {
       margin-left: 50rpx;
+    }
+    .badge {
+      position: absolute;
+      display: block;
+      left: 38rpx;
+      top: -15rpx;
+      height: 30rpx;
+      padding: 2rpx 8rpx;
+      border-radius: 15rpx;
+      font-size: 20rpx;
+      line-height: 30rpx;
+      text-align: center;
+      color: #fff;
+      background-color: #ff2d2d;
     }
     .icon {
       font-size: 34rpx;
@@ -359,19 +374,6 @@ page {
       color: #fff;
       & + .btn {
         margin-left: 22rpx;
-      }
-      .badge {
-        position: absolute;
-        display: block;
-        right: -15rpx;
-        top: -10rpx;
-        height: 30rpx;
-        padding: 0 15rpx;
-        border-radius: 15rpx;
-        font-size: 20rpx;
-        line-height: 30rpx;
-        text-align: center;
-        background-color: #ff2d2d;
       }
     }
   }
