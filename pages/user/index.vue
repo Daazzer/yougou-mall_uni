@@ -20,6 +20,7 @@
           v-for="(orderOptionItem, index) in orderOptionItems"
           :key="orderOptionItem.icon"
           :class="{ 'order-option__item': true, 'active': index === activeOrderOptionItem }"
+          @click="handleOption(orderOptionItem.text)"
         >
           <text :class="'iconfont icon-' + orderOptionItem.icon" />
           <text class="order-option-text">{{ orderOptionItem.text }}</text>
@@ -32,7 +33,7 @@
           v-for="userOptionItem in getUserOptionItems"
           :key="userOptionItem.text"
           :open-type="userOptionItem.openType"
-          @click="handleUserOption(userOptionItem.text)"
+          @click="handleOption(userOptionItem.text)"
         >
           <view class="user-option-content">
             <text :class="'iconfont icon-' + userOptionItem.icon" />
@@ -61,10 +62,16 @@ export default {
     }
   },
   methods: {
-    handleUserOption (key) {
+    handleOption (key) {
       switch (key) {
         case '注销':
           this.logout()
+          break
+        case '全部订单':
+          uni.navigateTo({ url: '/pages/order/index' })
+          break
+        case '待付款':
+          uni.navigateTo({ url: '/pages/order/index?type=2' })
           break
       }
     },
