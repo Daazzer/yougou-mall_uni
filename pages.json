@@ -52,6 +52,13 @@
         "navigationBarTitleText": "支付",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {
@@ -98,6 +105,11 @@
   "condition": {
     "current": 0,
     "list": [
+      {
+        "name": "登录",
+        "path": "pages/login/index",
+        "query": ""
+      },
       {
         "name": "我的",
         "path": "pages/user/index",
