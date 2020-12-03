@@ -1,12 +1,7 @@
 <template>
   <view class="user">
     <view class="user__info">
-      <button
-        class="login-btn"
-        size="mini"
-        open-type="getUserInfo"
-        @getuserinfo="login"
-      >去登陆</button>
+      <navigator class="login-btn" url="/pages/login/index">去登陆</navigator>
     </view>
     <view class="user__main">
       <view class="order-option">
@@ -20,17 +15,19 @@
         </view>
       </view>
       <view class="user-option">
-        <view
+        <button
           class="user-option__item"
+          plain
           v-for="userOptionItem in userOptionItems"
           :key="userOptionItem.text"
+          :open-type="userOptionItem.openType"
         >
           <view class="user-option-content">
             <text :class="'iconfont icon-' + userOptionItem.icon" />
             <text>{{ userOptionItem.text }}</text>
           </view>
           <view class="user-option-subtext" v-if="userOptionItem.subText">{{ userOptionItem.subText }}</view>
-        </view>
+        </button>
       </view>
     </view>
   </view>
@@ -49,20 +46,10 @@ export default {
         { text: '全部订单', icon: 'quanbudingdan01' }
       ],
       userOptionItems: [
-        { text: '联系客服', subText: '400-618-4000', icon: 'kefu' },
+        { text: '联系客服', subText: '400-618-4000', icon: 'kefu', openType: 'contact' },
         { text: '意见反馈', icon: 'fankuitianbao' },
         { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' }
       ]
-    }
-  },
-  methods: {
-    login (userInfo) {
-      uni.login({
-        success (code) {
-          console.log(code)
-          console.log(userInfo)
-        }
-      })
     }
   },
   onShow () {
@@ -131,8 +118,13 @@ page {
         align-items: center;
         padding: 30rpx 10rpx;
         font-size: 26rpx;
+        border: 0;
         border-bottom: 1px solid #c8c8c8;
+        border-radius: 0;
         color: #434343;
+        &::after {
+          content: none;
+        }
         .iconfont {
           margin-right: 28rpx;
           font-size: 45rpx;
