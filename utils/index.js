@@ -18,3 +18,20 @@ export const showErrorTips = (err, msg) => {
   }
   uni.showToast({ title: msg, icon: 'none' })
 }
+
+/**
+ * 检测登录状态
+ */
+export const checkLogin = () => {
+  const yougou = uni.getStorageSync('yougou')
+
+  if (!yougou) {
+    return false
+  } else if (!yougou.user) {
+    return false
+  } else if (!yougou.user.token) {
+    return false
+  } else {
+    return true
+  }
+}
