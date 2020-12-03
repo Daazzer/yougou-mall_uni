@@ -1,7 +1,18 @@
 <template>
   <view class="user">
     <view class="user__info">
-      <navigator class="login-btn" url="/pages/login/index">去登陆</navigator>
+      <view
+        class="user-bg"
+        v-if="user.token"
+        :style="{
+          'background-image': `${user.token ? `url(${user.avatarUrl})` : 'none'};`
+        }"
+      />
+      <view v-if="user.token" class="user-info">
+        <image :src="user.avatarUrl" />
+        <text>{{ user.nickName }}</text>
+      </view>
+      <navigator v-else class="login-btn" url="/pages/login/index">去登陆</navigator>
     </view>
     <view class="user__main">
       <view class="order-option">
@@ -18,9 +29,10 @@
         <button
           class="user-option__item"
           plain
-          v-for="userOptionItem in userOptionItems"
+          v-for="userOptionItem in getUserOptionItems"
           :key="userOptionItem.text"
           :open-type="userOptionItem.openType"
+          @click="handleUserOption(userOptionItem.text)"
         >
           <view class="user-option-content">
             <text :class="'iconfont icon-' + userOptionItem.icon" />
@@ -45,11 +57,56 @@ export default {
         { text: '退货/退款', icon: 'tuihuo' },
         { text: '全部订单', icon: 'quanbudingdan01' }
       ],
-      userOptionItems: [
+      user: {}
+    }
+  },
+  methods: {
+    handleUserOption (key) {
+      switch (key) {
+        case '注销':
+          this.logout()
+          break
+      }
+    },
+    logout () {
+      uni.showModal({
+        title: '提示',
+        content: '真的要退出吗？',
+        success: res => {
+          if (res.confirm) {
+            this.user = {}
+            this.setYouGouUser()
+            uni.showToast({ title: '退出成功' })
+          }
+        }
+      })
+    },
+    setYouGouUser () {
+      let yougou = uni.getStorageSync('yougou')
+
+      if (!yougou) {
+        yougou = {}
+      }
+
+      yougou.user = this.user
+
+      uni.setStorageSync('yougou', yougou)
+    }
+  },
+  computed: {
+    getUserOptionItems () {
+      const userOptionItems = [
         { text: '联系客服', subText: '400-618-4000', icon: 'kefu', openType: 'contact' },
         { text: '意见反馈', icon: 'fankuitianbao' },
-        { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' }
+        { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' },
+        { text: '注销', icon: 'zhuxiao' }
       ]
+
+      if (!this.user.token) {
+        return userOptionItems.filter((v, i) => i < 3)
+      }
+
+      return userOptionItems
     }
   },
   onShow () {
@@ -57,6 +114,14 @@ export default {
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {
       page.getTabBar().setData({ currentIndex: 3 })
     }
+    const yougou = uni.getStorageSync('yougou')
+
+    if (!yougou) {
+      this.user = {}
+      return
+    }
+
+    this.user = yougou.user ? yougou.user : {}
   }
 }
 </script>
@@ -70,10 +135,35 @@ page {
 <style lang="scss" scoped>
 .user {
   &__info {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 350rpx;
+    margin-bottom: 20rpx;
+    .user-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: no-repeat center / cover;
+      z-index: -1;
+      filter: blur(2px);
+    }
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 32rpx;
+      color: #fff;
+      image {
+        width: 172rpx;
+        height: 172rpx;
+        margin-bottom: 16rpx;
+        border-radius: 50%;
+      }
+    }
     .login-btn {
       padding: 19rpx 122rpx;
       border-radius: 8rpx;
