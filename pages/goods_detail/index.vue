@@ -3,9 +3,9 @@
     <swiper
       class="goods-pics"
       indicator-active-color="#ea4350"
-      :indicator-dots="goodsDetail.pics.length > 0"
+      :indicator-dots="hasPics"
     >
-      <template v-if="goodsDetail.pics.length > 0">
+      <template v-if="hasPics">
         <swiper-item
           class="goods-pics__item"
           v-for="(goodsPic, index) in goodsDetail.pics"
@@ -196,6 +196,9 @@ export default {
   computed: {
     favoriteClass () {
       return this.isFavoriteGoods ? 'shoucang1' : 'shoucang'
+    },
+    hasPics () {
+      return this.goodsDetail.pics.length > 0
     }
   },
   onLoad ({ goods_id }) {
