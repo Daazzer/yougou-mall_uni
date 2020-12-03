@@ -109,7 +109,7 @@ export default {
   z-index: 5;
   &__item {
     position: relative;
-    padding: 20rpx 0;
+    padding: 40rpx 0;
     text-align: center;
     font-size: 28rpx;
     font-weight: 500;
@@ -120,7 +120,7 @@ export default {
         content: "";
         position: absolute;
         left: 0;
-        top: 16rpx;
+        top: 40rpx;
         display: block;
         width: 4rpx;
         height: 43rpx;
