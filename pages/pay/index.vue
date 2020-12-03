@@ -28,7 +28,7 @@
     <GoodsCalcBar
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
-      :disabledSettleBtn="!(hasReceiverInfo && checkedGoodsNum > 0)"
+      :disabledSettleBtn="!(hasReceiverInfo && checkedGoodsNum > 0) || isPaying"
       @settle="pay"
     >
       <template>去支付</template>
@@ -39,6 +39,7 @@
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
 import GoodsCalcBar from '@/components/GoodsCalcBar.vue'
+import { checkLogin } from '@/utils'
 
 export default {
   name: 'Pay',
@@ -49,7 +50,8 @@ export default {
   data () {
     return {
       checkedGoodsItems: [],
-      receiverInfo: {}
+      receiverInfo: {},
+      isPaying: false
     }
   },
   methods: {
@@ -67,7 +69,7 @@ export default {
 
           const phoneReg = /(?:^(?:1\d{2})(\d{4})|^(?:0\d{2}-\d)(\d{4}))\d*/
 
-          // r1 匹配到的手机号码，r2 匹配到的座机号码
+          // r1 匹配到的手机号码片段，r2 匹配到的座机号码片段
           let [phone, r1, r2] = phoneReg.exec(telNumber)
           let r = r1 ? r1 : r2
 
@@ -90,21 +92,81 @@ export default {
         }
       })
     },
-    pay () {
-      // TODO 需要后台的信息，先完成登录页
-      /* uni.requestPayment({
-        timeStamp: '',
-        nonceStr: '',
-        package: '',
-        signType: 'MD5',
-        paySign: '',
-        success (res) {
-          console.log(res)
-        },
-        fail (res) {
-          console.log(res)
+    async pay () {
+      if (!checkLogin()) {
+        uni.showModal({
+          title: '提示',
+          content: '需要登录后才能支付，是否登录？',
+          success (res) {
+            if (res.confirm) {
+              uni.navigateTo({ url: '/pages/login/index' })
+            }
+          }
+        })
+        return
+      }
+
+      this.isPaying = true
+
+      const [orderErr, order_number] = await this.getOrderNumber()
+
+      if (orderErr) {
+        this.isPaying = false
+        this.$showErrorTips(orderErr, '创建订单失败')
+        return
+      }
+
+      const [payParamsErr, payParams] = await this.getPayParams(order_number)
+
+      if (payParamsErr) {
+        this.isPaying = false
+        this.$showErrorTips(payParamsErr, '获取支付参数失败')
+        return
+      }
+
+      uni.requestPayment({
+        ...payParams,
+        complete: async () => {
+          const [err, res] = await this.$api.checkOrder({ order_number })
+
+          // TODO 页面跳转
+          if (err) {
+            err.msg ? this.$showErrorTips({}, err.msg) : this.$showErrorTips(err, '支付失败')
+          } else {
+            uni.showToast({ title: res.data.message })
+          }
+
+          this.isPaying = false
         }
-      }) */
+      })
+    },
+    async getOrderNumber () {
+      const data = {
+        order_price: this.totalPrice,
+        consignee_addr: this.receiverInfo.address,
+        goods: this.checkedGoodsItems.map(v => ({
+          goods_id: v.goods_id,
+          goods_number: v.goodsNum,
+          goods_price: v.goods_price
+        }))
+      }
+
+      const [err, res] = await this.$api.createOrder(data)
+
+      if (err) {
+        return [err]
+      }
+
+      return [null, res.data.message.order_number]
+    },
+    async getPayParams (order_number) {
+      const [err, res] = await this.$api.getPayParams({ order_number })
+
+      if (err) {
+        return [err]
+      }
+
+      return [null, res.data.message.pay]
     }
   },
   computed: {
@@ -122,7 +184,7 @@ export default {
       return keys.every(key => this.receiverInfo[key] !== '' && this.receiverInfo[key])
     }
   },
-  onShow () {
+  async onShow () {
     const yougou = uni.getStorageSync('yougou')
 
     if (!yougou) {
