@@ -8,32 +8,38 @@
           active: index === activeNavItem
         }"
         :key="orderNavItem.title"
+        @click="switchNav(index)"
       >{{ orderNavItem.title }}</view>
     </view>
-    <view class="order-list">
+    <view class="order-list" v-if="orderItems.length > 0">
       <view
         class="order-list__item"
         v-for="orderItem in orderItems"
-        :key="orderItem.orderNum"
+        :key="orderItem.order_number"
       >
         <view class="order-item-field order-num">
           <view class="order-label">订单编号</view>
-          <view class="order-content">{{ orderItem.orderNum }}</view>
+          <view class="order-content">{{ orderItem.order_number }}</view>
         </view>
         <view class="order-item-field order-price">
           <view class="order-label">订单金额</view>
-          <view class="order-content">&yen;{{ orderItem.orderPrice }}</view>
+          <view class="order-content">&yen;{{ orderItem.order_price }}</view>
         </view>
         <view class="order-item-field order-date">
           <view class="order-label">订单日期</view>
-          <view class="order-content">{{ orderItem.orderDate }}</view>
+          <view class="order-content">{{ orderItem.create_time | dateFormat }}</view>
         </view>
       </view>
+    </view>
+    <view class="order-list--none" v-else>
+      暂无数据
     </view>
   </view>
 </template>
 
 <script>
+import { dateFormat } from '@/utils'
+
 export default {
   name: 'Order',
   data () {
@@ -44,24 +50,32 @@ export default {
         { title: '待付款' },
         { title: '待发货' }
       ],
-      orderItems: [
-        {
-          orderNum: 'HMD151515151561113131313131',
-          orderPrice: 3999,
-          orderDate: '2020/1/8 18:32:22'
-        },
-        {
-          orderNum: 'HMD45645645646456456456456456',
-          orderPrice: 3999,
-          orderDate: '2020/1/8 18:32:22'
-        },
-        {
-          orderNum: 'HMD8797897984897897897987',
-          orderPrice: 3999,
-          orderDate: '2020/1/8 18:32:22'
-        }
-      ]
+      orderItems: []
     }
+  },
+  methods: {
+    switchNav (index) {
+      this.activeNavItem = index
+      this.renderOrderItems(this.activeNavItem + 1)
+    },
+    async renderOrderItems (type) {
+      const [err, res] = await this.$api.checkOrderHistory({ type })
+
+      if (err) {
+        this.$showErrorTips(err, '获取订单数据失败')
+        return
+      }
+
+      this.orderItems = res.data.message.orders
+    }
+  },
+  filters: {
+    dateFormat
+  },
+  onLoad ({ type }) {
+    this.activeNavItem = type ? type - 1 : 0
+
+    this.renderOrderItems(this.activeNavItem + 1)
   }
 }
 </script>
@@ -74,7 +88,7 @@ page {
 
 <style lang="scss" scoped>
 .order {
-  padding-top: 93rpx;
+  padding: 95rpx 0 30rpx;
   &-nav-bar {
     position: fixed;
     display: flex;
@@ -122,6 +136,12 @@ page {
           color: #ea4350;
         }
       }
+    }
+    &--none {
+      padding-top: 300rpx;
+      text-align: center;
+      font-size: 38rpx;
+      color: #676767;
     }
   }
 }
