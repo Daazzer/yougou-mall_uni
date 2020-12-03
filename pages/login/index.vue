@@ -11,6 +11,8 @@
       type="primary"
       open-type="getUserInfo"
       v-else
+      :loading="logging"
+      :disabled="logging"
       @getuserinfo="login"
     >授权微信登录</button>
   </view>
@@ -22,14 +24,17 @@ export default {
   data () {
     return {
       user: {},
-      firstLogin: false
+      firstLogin: false,
+      logging: false
     }
   },
   methods: {
     async login (user) {
+      this.logging = true
       const [userInfoErr, userInfo] = await this.getUserInfo(user.detail)
 
       if (userInfoErr) {
+        this.logging = false
         uni.showToast({ title: '授权失败', icon: 'none' })
         return
       }
@@ -37,11 +42,12 @@ export default {
       const [err, res] = await this.$api.getToken(userInfo)
 
       if (err) {
+        this.logging = false
         this.$showErrorTips(err, '登录失败')
         return
       }
 
-      uni.showToast({ title: res.msg })
+      uni.showToast({ title: res.data.meta.msg })
 
       const token = res.data.message.token
 
@@ -50,6 +56,7 @@ export default {
         token
       }
 
+      this.logging = false
       this.firstLogin = true
 
       this.saveUserInfo()
