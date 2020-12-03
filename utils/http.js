@@ -27,10 +27,11 @@ export default {
           } else {
             rj({ msg: res.data.meta.msg })
           }
-          uni.hideLoading()
         },
         fail (err) {
           rj(err)
+        },
+        complete () {
           uni.hideLoading()
         }
       })
