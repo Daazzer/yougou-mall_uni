@@ -1,5 +1,14 @@
+import { checkLogin } from './index'
+
 export default {
   baseURL: 'https://api-hmugo-web.itheima.net/api/public/v1',
+  authReg: /^\/my.*/,
+  addAuthHeaderField (header) {
+    const yougou = uni.getStorageSync('yougou')
+    header.Authorization = yougou.user.token
+
+    return header
+  },
   /**
    * http 请求
    * @param {string} method 请求方法
@@ -11,10 +20,16 @@ export default {
     const p = new Promise((rv, rj) => {
       uni.showLoading({ title: '数据加载中...' })
 
+      let header = { 'content-type': 'application/json' }
+
+      if (this.authReg.test(url) && checkLogin()) {
+        header = this.addAuthHeaderField(header)
+      }
+
       uni.request({
         url: this.baseURL + url,
         data,
-        header: { 'content-type': 'application/json' },
+        header,
         method,
         success (res) {
           if (!res.data) {
