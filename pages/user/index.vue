@@ -69,6 +69,9 @@ export default {
         case '注销':
           this.logout()
           break
+        case '意见反馈':
+          uni.navigateTo({ url: '/pages/feedback/index' })
+          break
         case '全部订单':
         case '待付款':
           this.orderOption(key)
