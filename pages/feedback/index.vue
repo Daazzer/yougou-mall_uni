@@ -16,14 +16,20 @@
     </view>
     <textarea class="feedback__quest-content" placeholder="请描述一下您的问题" />
     <view class="feedback__upload">
-      <view class="upload-title">上传图片 (0/4)</view>
+      <view class="upload-title">上传图片 ({{ imageItems.length }}/4)</view>
       <view class="upload-images">
         <view class="upload-images-list">
-          <view class="upload-images-list__btn iconfont icon-jiahao1" />
-          <image class="upload-images-list__item" src="/static/images/cart.png" />
-          <image class="upload-images-list__item" src="/static/images/cart.png" />
-          <image class="upload-images-list__item" src="/static/images/cart.png" />
-          <image class="upload-images-list__item" src="/static/images/cart.png" />
+          <view class="upload-images-list__btn iconfont icon-jiahao1" @click="uploadImg" />
+          <template v-if="imageItems.length > 0">
+            <view
+              class="upload-images-list__item"
+              v-for="(imageItem, index) in imageItems"
+              :key="imageItem"
+            >
+              <image :src="imageItem" />
+              <view class="clear-image-btn iconfont icon-guanbi" @click="clearImage(index)" />
+            </view>
+          </template>
         </view>
       </view>
     </view>
@@ -41,12 +47,33 @@ export default {
         { content: '性能问题', checked: false },
         { content: '体验问题', checked: false },
         { content: '其他', checked: false }
-      ]
+      ],
+      imageItems: []
     }
   },
   methods: {
     checkQuest (index, checked) {
       this.questTypeItems[index].checked = !checked
+    },
+    uploadImg () {
+      uni.chooseImage({
+        count: 4,
+        success: chooseImageRes => {
+          if (this.imageItems.length >= 4) {
+            uni.showToast({ title: '最多上传四张图片', icon: 'none' })
+            return
+          }
+          const tempFilePaths = chooseImageRes.tempFilePaths
+          tempFilePaths.forEach(tempFilePath => {
+            if (this.imageItems.length < 4) {
+              this.imageItems.push(tempFilePath)
+            }
+          })
+        }
+      })
+    },
+    clearImage (index) {
+      this.imageItems.splice(index, 1)
     }
   }
 }
@@ -127,6 +154,28 @@ page {
         text-align: center;
         color: #a6a6a6;
         background-color: #d8d8d8;
+      }
+      &__item {
+        position: relative;
+        image {
+          width: 100%;
+          height: 100%;
+        }
+        .clear-image-btn {
+          position: absolute;
+          right: -16rpx;
+          top: -16rpx;
+          width: 45rpx;
+          height: 45rpx;
+          line-height: 45rpx;
+          border-radius: 50%;
+          font-size: 26rpx;
+          font-weight: 600;
+          text-align: center;
+          color: #f9d247;
+          background-color: #e0343fe7;
+          z-index: 10;
+        }
       }
     }
   }
