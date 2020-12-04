@@ -116,6 +116,11 @@
     "current": 0,
     "list": [
       {
+        "name": "意见反馈",
+        "path": "pages/feedback/index",
+        "query": ""
+      },
+      {
         "name": "订单查询",
         "path": "pages/order/index",
         "query": ""
