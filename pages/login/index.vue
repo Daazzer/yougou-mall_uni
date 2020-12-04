@@ -29,7 +29,6 @@ export default {
     }
   },
   methods: {
-    // TODO 添加登录前用户选择提示
     async login (user) {
       this.logging = true
       const [userInfoErr, userInfo] = await this.getUserInfo(user.detail)
