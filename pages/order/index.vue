@@ -2,13 +2,13 @@
   <view class="order">
     <view class="order-nav-bar">
       <view
-        v-for="(orderNavItem, index) in orderNavItems"
+        v-for="orderNavItem in orderNavItems"
         :class="{
           'order-nav-bar__item': true,
-          active: index === activeNavItem
+          active: type === orderNavItem.type
         }"
-        :key="orderNavItem.title"
-        @click="switchNav(index)"
+        :key="orderNavItem.type"
+        @click="switchNav(orderNavItem.type)"
       >{{ orderNavItem.title }}</view>
     </view>
     <view class="order-list" v-if="orderItems.length > 0">
@@ -34,6 +34,10 @@
     <view class="order-list--none" v-else>
       暂无数据
     </view>
+    <view
+      class="order-list--last-page"
+      v-if="orderItems.length > 0 && isLastPage"
+    >到底啦...</view>
   </view>
 </template>
 
@@ -44,42 +48,76 @@ export default {
   name: 'Order',
   data () {
     return {
-      activeNavItem: 0,
+      type: 1,
+      pageIndex: 1,
+      pageSize: 15,
+      isLoadingOrderItems: false,
+      isLastPage: false,
       orderNavItems: [
-        { title: '全部' },
-        { title: '待付款' },
-        { title: '待发货' }
+        { title: '全部', type: 1 },
+        { title: '待付款', type: 2 },
+        { title: '待发货', type: 3 }
       ],
       orderItems: []
     }
   },
   methods: {
-    switchNav (index) {
-      this.activeNavItem = index
-      this.renderOrderItems(this.activeNavItem + 1)
+    switchNav (type) {
+      this.type = type
+      this.pageIndex = 1
+      this.isLastPage = false
+      this.renderOrderItems(this.type)
     },
     async renderOrderItems (type) {
-      const [err, res] = await this.$api.checkOrderHistory({ type })
+      this.isLoadingOrderItems = true
+      const [err, res] = await this.$api.checkOrderHistory({
+        type,
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize
+      })
 
       if (err) {
         this.$showErrorTips(err, '获取订单数据失败')
+        this.isLoadingOrderItems = false
         return
       }
 
-      this.orderItems = res.data.message.orders
+      let orderItems = []
+
+      if (res.data.message) {
+        orderItems = res.data.message.orders
+      }
+
+      if (orderItems.length < this.pageSize) {
+        this.isLastPage = true
+      }
+
+      if (this.pageIndex === 1) {
+        this.orderItems = orderItems
+      } else {
+        this.orderItems.push(...orderItems)
+      }
+
+      this.isLoadingOrderItems = false
     }
   },
   filters: {
     dateFormat
   },
   onLoad ({ type }) {
-    this.activeNavItem = type ? type - 1 : 0
+    this.type = type ? Number(type) : 1
 
-    this.renderOrderItems(this.activeNavItem + 1)
+    this.renderOrderItems(this.type)
   },
   onShow () {
     if (!checkLogin()) {
       uni.redirectTo({ url: '/pages/login/index' })
+    }
+  },
+  onReachBottom () {
+    if (!this.isLastPage && !this.isLoadingOrderItems) {
+      this.pageIndex++
+      this.renderOrderItems(this.type)
     }
   }
 }
@@ -143,10 +181,15 @@ page {
       }
     }
     &--none {
-      padding-top: 300rpx;
+      margin-top: 300rpx;
       text-align: center;
       font-size: 38rpx;
       color: #676767;
+    }
+    &--last-page {
+      @extend .order-list--none;
+      margin-top: 40rpx;
+      padding-bottom: 30rpx;
     }
   }
 }
