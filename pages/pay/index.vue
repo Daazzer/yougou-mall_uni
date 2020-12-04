@@ -129,14 +129,24 @@ export default {
         complete: async () => {
           const [err, res] = await this.$api.checkOrder({ order_number })
 
-          // TODO 页面跳转
           if (err) {
             err.msg ? this.$showErrorTips({}, err.msg) : this.$showErrorTips(err, '支付失败')
+            err.msg ? setTimeout(() => {
+              uni.navigateTo({ url: '/pages/order/index?type=2' })
+              this.isPaying = false
+            }, 3000) : this.isPaying = false
           } else {
-            uni.showToast({ title: res.data.message })
+            uni.showToast({
+              title: res.data.message,
+              success: () => {
+                setTimeout(() => {
+                  uni.redirectTo({ url: '/pages/order/index?type=3' })
+                  this.isPaying = false
+                  this.clearCheckedGoods()
+                }, 3000)
+              }
+            })
           }
-
-          this.isPaying = false
         }
       })
     },
@@ -167,6 +177,20 @@ export default {
       }
 
       return [null, res.data.message.pay]
+    },
+    clearCheckedGoods () {
+      const yougou = uni.getStorageSync('yougou')
+
+      if (!yougou) {
+        return
+      }
+
+      if (yougou.cart) {
+        let unCheckedGoods = yougou.cart.filter(goodsItem => !goodsItem.checked)
+        yougou.cart = unCheckedGoods
+      }
+
+      uni.setStorageSync('yougou', yougou)
     }
   },
   computed: {
