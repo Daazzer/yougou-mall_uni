@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { dateFormat } from '@/utils'
+import { dateFormat, checkLogin } from '@/utils'
 
 export default {
   name: 'Order',
@@ -76,6 +76,11 @@ export default {
     this.activeNavItem = type ? type - 1 : 0
 
     this.renderOrderItems(this.activeNavItem + 1)
+  },
+  onShow () {
+    if (!checkLogin()) {
+      uni.redirectTo({ url: '/pages/login/index' })
+    }
   }
 }
 </script>
