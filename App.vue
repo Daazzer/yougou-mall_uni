@@ -1,8 +1,6 @@
 <script>
 export default {
-  onLaunch: function() {},
-  onShow: function() {},
-  onHide: function() {}
+  name: 'App'
 }
 </script>
 
