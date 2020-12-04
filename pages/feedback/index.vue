@@ -106,11 +106,11 @@ page {
       flex-wrap: wrap;
       &__item {
         width: 180rpx;
-        height: 46rpx;
-        margin-right: 53rpx;
+        height: 45rpx;
+        margin-right: 45rpx;
         margin-bottom: 20rpx;
         text-align: center;
-        line-height: 46rpx;
+        line-height: 45rpx;
         font-size: 20rpx;
         border: 1rpx solid transparent;
         border-radius: 23rpx;
@@ -129,6 +129,7 @@ page {
   }
   &__quest-content {
     height: 391rpx;
+    width: 675rpx;
     padding: 30rpx 22rpx;
     margin-bottom: 20rpx;
     font-size: 26rpx;
