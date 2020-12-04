@@ -25,6 +25,8 @@ const checkOrder = data => http.post('/my/orders/chkOrder', data)
  * 历史订单查询
  * @param {Object} data 请求体参数
  * @param {number} data.type 接受的值: 1:全部订单 2:待付款 3:待发货
+ * @param {number} [data.pageIndex=10] 当前页码
+ * @param {number} [data.pageSize=1] 每页条数
  * @returns {Promise}
  */
 const checkOrderHistory = data => http.get('/my/orders/all', data)
