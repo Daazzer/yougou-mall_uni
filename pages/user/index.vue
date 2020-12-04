@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { checkLogin } from '@/utils'
+
 export default {
   name: 'User',
   data () {
@@ -68,10 +70,8 @@ export default {
           this.logout()
           break
         case '全部订单':
-          uni.navigateTo({ url: '/pages/order/index' })
-          break
         case '待付款':
-          uni.navigateTo({ url: '/pages/order/index?type=2' })
+          this.orderOption(key)
           break
       }
     },
@@ -87,6 +87,20 @@ export default {
           }
         }
       })
+    },
+    orderOption (key) {
+      if (!checkLogin()) {
+        uni.navigateTo({ url: '/pages/login/index' })
+        return
+      }
+
+      let type = ''
+
+      if (key === '待付款') {
+        type = '?type=2'
+      }
+
+      uni.navigateTo({ url: '/pages/order/index' + type })
     },
     setYouGouUser () {
       let yougou = uni.getStorageSync('yougou')
