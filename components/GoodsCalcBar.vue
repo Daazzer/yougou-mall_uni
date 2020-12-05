@@ -9,7 +9,7 @@
         <icon
           :type="isCheckedAll ? 'success': 'circle'"
           :color="isCheckedAll ? '#e03440' : ''"
-          size="35rpx"
+          size="40rpx"
         />
         <label class="checked-all-btn__label">全选</label>
       </view>

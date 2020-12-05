@@ -98,7 +98,7 @@ page {
     margin-bottom: 20rpx;
     .quest-type-title {
       margin-bottom: 20rpx;
-      font-size: 26rpx;
+      font-size: 32rpx;
       color: #434343;
     }
     .quest-type-list {
@@ -106,14 +106,14 @@ page {
       flex-wrap: wrap;
       &__item {
         width: 180rpx;
-        height: 45rpx;
+        height: 60rpx;
         margin-right: 45rpx;
         margin-bottom: 20rpx;
         text-align: center;
-        line-height: 45rpx;
-        font-size: 20rpx;
+        line-height: 60rpx;
+        font-size: 28rpx;
         border: 1rpx solid transparent;
-        border-radius: 23rpx;
+        border-radius: 30rpx;
         color: #545353;
         background-color: #ededed;
         &.active {
@@ -129,18 +129,18 @@ page {
   }
   &__quest-content {
     height: 391rpx;
-    width: 675rpx;
-    padding: 30rpx 22rpx;
+    width: 670rpx;
+    padding: 30rpx 35rpx;
     margin-bottom: 20rpx;
-    font-size: 26rpx;
+    font-size: 32rpx;
   }
   &__upload {
     padding: 20rpx 18rpx 13rpx;
-    margin-bottom: 20rpx;
+    margin-bottom: 35rpx;
     font-size: 26rpx;
     color: #434343;
     .upload-title {
-      margin-bottom: 18rpx;
+      margin-bottom: 28rpx;
     }
     .upload-images-list {
       display: flex;
@@ -181,10 +181,10 @@ page {
     }
   }
   &__submit {
-    height: 70rpx;
-    line-height: 70rpx;
-    border-radius: 35rpx;
-    font-size: 30rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    border-radius: 50rpx;
+    font-size: 35rpx;
     background-color: #ea4350;
     &::after {
       content: none;

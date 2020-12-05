@@ -97,7 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 .category {
-  padding-bottom: 113rpx;
+  padding-bottom: 120rpx;
 }
 .category-nav-list {
   position: fixed;
@@ -111,7 +111,7 @@ export default {
     position: relative;
     padding: 40rpx 0;
     text-align: center;
-    font-size: 28rpx;
+    font-size: 30rpx;
     font-weight: 500;
     color: #585858;
     &.active {
@@ -134,10 +134,10 @@ export default {
   padding-left: 182rpx;
 }
 .category-title {
-  padding-top: 18rpx;
+  padding-top: 20rpx;
   margin-bottom: 30rpx;
   text-align: center;
-  font-size: 26rpx;
+  font-size: 32rpx;
   color: #575757;
   &__text {
     margin: 0 12rpx;
@@ -147,10 +147,10 @@ export default {
 .goods-list {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 48rpx;
+  padding: 0 35rpx;
   &__item {
-    margin: 0 0 30rpx 56rpx;
-    font-size: 21rpx;
+    margin: 0 0 30rpx 60rpx;
+    font-size: 24rpx;
     color: #2e2e2e;
     &:nth-child(3n + 1) {
       margin-left: 0;

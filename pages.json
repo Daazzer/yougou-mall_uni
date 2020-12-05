@@ -116,6 +116,16 @@
     "current": 0,
     "list": [
       {
+        "name": "分类",
+        "path": "pages/category/index",
+        "query": ""
+      },
+      {
+        "name": "商品列表",
+        "path": "pages/goods_list/index",
+        "query": ""
+      },
+      {
         "name": "意见反馈",
         "path": "pages/feedback/index",
         "query": ""

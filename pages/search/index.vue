@@ -88,7 +88,7 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  padding-top: 90rpx;
+  padding: 110rpx 0 20rpx;
 }
 .search-bar {
   position: fixed;
@@ -96,8 +96,8 @@ export default {
   right: 0;
   top: 0;
   display: flex;
-  height: 90rpx;
-  padding: 15rpx 18rpx;
+  height: 110rpx;
+  padding: 20rpx 18rpx;
   background-color: #fff;
   z-index: 100;
   &__input-group {
@@ -107,15 +107,15 @@ export default {
     .iconfont {
       position: absolute;
       top: 50%;
-      left: 15rpx;
+      left: 25rpx;
       transform: translateY(-50%);
-      font-size: 29rpx;
+      font-size: 32rpx;
     }
     input {
       height: 100%;
-      padding-left: 57rpx;
-      font-size: 25rpx;
-      border-radius: 27rpx;
+      padding-left: 70rpx;
+      font-size: 30rpx;
+      border-radius: 40rpx;
       background-color: #e7e7e7;
     }
   }
@@ -124,12 +124,15 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 0;
-    width: 110rpx;
-    height: 61rpx;
-    border-radius: 8rpx;
-    font-size: 25rpx;
+    width: 160rpx;
+    height: 100%;
+    border-radius: 40rpx;
+    font-size: 32rpx;
     color: #fff;
     background-color: #ea4350;
+    &::after {
+      content: none;
+    }
   }
 }
 .search-result-list {

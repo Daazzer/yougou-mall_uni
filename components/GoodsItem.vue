@@ -2,7 +2,7 @@
   <view class="goods-item">
     <view class="goods-item__select-bar" v-if="isShowSelectBtn">
       <icon
-        size="35rpx"
+        size="40rpx"
         :type="goodsChecked ? 'success' : 'circle'"
         :color="goodsChecked ? '#e03440': '#8a8a8a'"
         @click="$emit('checked-goods')"
@@ -95,7 +95,7 @@ export default {
     flex: 1;
     padding: 26rpx 0;
     margin-left: 30rpx;
-    font-size: 24rpx;
+    font-size: 30rpx;
     color: #434343;
     .goods-price {
       color: #ea4350;
@@ -125,15 +125,15 @@ export default {
     position: absolute;
     align-items: center;
     right: 13rpx;
-    bottom: 33rpx;
+    bottom: 28rpx;
     color: #8a8a8a;
     z-index: 10;
     .goods-num {
       margin: 0 22rpx;
-      font-size: 30rpx;
+      font-size: 32rpx;
     }
     .goods-btn {
-      font-size: 32rpx;
+      font-size: 40rpx;
     }
   }
 }
