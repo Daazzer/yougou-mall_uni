@@ -39,6 +39,15 @@ export default {
       searchResultItems: []
     }
   },
+  computed: {
+    resultNoneText () {
+      if (this.isSearched && this.searchResultItems.length === 0) {
+        return '暂无搜索结果'
+      } else {
+        return '搜索你想买的商品'
+      }
+    }
+  },
   methods: {
     async renderSearchResultItems () {
       const query = this.searchText
@@ -72,15 +81,6 @@ export default {
       this.isSearching = true
 
       this.renderSearchResultItems()
-    }
-  },
-  computed: {
-    resultNoneText () {
-      if (this.isSearched && this.searchResultItems.length === 0) {
-        return '暂无搜索结果'
-      } else {
-        return '搜索你想买的商品'
-      }
     }
   }
 }
