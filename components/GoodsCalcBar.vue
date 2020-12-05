@@ -21,7 +21,7 @@
     <view class="goods-calc-bar__btn-group">
       <button
         class="del-btn"
-        v-if="deleteBtn"
+        v-if="showDeleteBtn"
         @click="$emit('delete')"
       >删除({{ checkedNum }})</button>
       <button
@@ -49,7 +49,7 @@ export default {
       type: Boolean,
       default: false
     },
-    deleteBtn: {
+    showDeleteBtn: {
       type: Boolean,
       default: false
     },
