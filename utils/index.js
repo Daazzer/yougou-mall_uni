@@ -7,6 +7,7 @@ export const getRect = selector => {
 
   return p
 }
+
 /**
  * 集中显示响应错误
  * @param {string} msg 自定义的提示信息
