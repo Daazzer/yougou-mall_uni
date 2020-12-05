@@ -1,11 +1,11 @@
 <template>
   <view class="pay">
-    <view class="delivery-address" @click="selectAddress">
-      <view class="delivery-address__content" v-if="hasReceiverInfo">
-        <view class="delivery-receiver-address">{{ receiverInfo.address }}</view>
+    <view class="delivery-address" @click="chooseAddress">
+      <view class="delivery-address__content" v-if="hasConsignee">
+        <view class="delivery-receiver-address">{{ consignee.address }}</view>
         <view class="delivery-receiver-info">
-          <view class="delivery-receiver-info__receiver-name">{{ receiverInfo.name }}</view>
-          <view class="delivery-receiver-info__receiver-phone">{{ receiverInfo.phone }}</view>
+          <view class="delivery-receiver-info__receiver-name">{{ consignee.name }}</view>
+          <view class="delivery-receiver-info__receiver-phone">{{ consignee.phone | maskPhoneNum }}</view>
         </view>
       </view>
       <view
@@ -28,7 +28,7 @@
     <GoodsCalcBar
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
-      :disabledSettleBtn="!(hasReceiverInfo && checkedGoodsNum > 0) || isPaying"
+      :disabledSettleBtn="!(hasConsignee && checkedGoodsNum > 0) || isPaying"
       @settle="pay"
     >
       <template>去支付</template>
@@ -50,12 +50,38 @@ export default {
   data () {
     return {
       checkedGoodsItems: [],
-      receiverInfo: {},
+      consignee: {},
       isPaying: false
     }
   },
+  computed: {
+    totalPrice () {
+      return this.checkedGoodsItems.reduce((totalPrice, checkedGoodsItem) => {
+        return totalPrice += checkedGoodsItem.goods_price * checkedGoodsItem.goods_number
+      }, 0)
+    },
+    checkedGoodsNum () {
+      return this.checkedGoodsItems.length
+    },
+    hasConsignee () {
+      const keys = ['address', 'name', 'phone']
+
+      return keys.every(key => this.consignee[key] !== '' && this.consignee[key])
+    }
+  },
+  filters: {
+    maskPhoneNum (phoneNum) {
+      const phoneReg = /(?:^(?:1\d{2})(\d{4})|^(?:0\d{2}-\d)(\d{4}))\d*/
+
+      // r1 匹配到的手机号码片段，r2 匹配到的座机号码片段
+      const [phone, r1, r2] = phoneReg.exec(phoneNum)
+      const r = r1 ? r1 : r2
+
+      return phone.replace(r, '****')
+    }
+  },
   methods: {
-    selectAddress () {
+    chooseAddress () {
       uni.chooseAddress({
         success: res => {
           const {
@@ -67,28 +93,13 @@ export default {
             telNumber
           } = res
 
-          const phoneReg = /(?:^(?:1\d{2})(\d{4})|^(?:0\d{2}-\d)(\d{4}))\d*/
-
-          // r1 匹配到的手机号码片段，r2 匹配到的座机号码片段
-          let [phone, r1, r2] = phoneReg.exec(telNumber)
-          let r = r1 ? r1 : r2
-
-          phone = phone.replace(r, '****')
-
-          this.receiverInfo = {
+          this.consignee = {
             address: provinceName + cityName + countyName + detailInfo,
             name: userName,
-            phone
+            phone: telNumber
           }
 
-          let yougou = uni.getStorageSync('yougou')
-
-          if (!yougou) {
-            yougou = {}
-          }
-
-          yougou.receiverInfo = this.receiverInfo
-          uni.setStorageSync('yougou', yougou)
+          this.$yougou.setData('consignee', { ...this.consignee })
         }
       })
     },
@@ -136,16 +147,12 @@ export default {
               this.isPaying = false
             }, 3000) : this.isPaying = false
           } else {
-            uni.showToast({
-              title: res.data.message,
-              success: () => {
-                setTimeout(() => {
-                  uni.redirectTo({ url: '/pages/order/index?type=3' })
-                  this.isPaying = false
-                  this.clearCheckedGoods()
-                }, 3000)
-              }
-            })
+            uni.showToast({ title: res.data.message })
+            setTimeout(() => {
+              uni.redirectTo({ url: '/pages/order/index?type=3' })
+              this.isPaying = false
+              this.clearCheckedGoods()
+            }, 3000)
           }
         }
       })
@@ -153,10 +160,10 @@ export default {
     async getOrderNumber () {
       const data = {
         order_price: this.totalPrice,
-        consignee_addr: this.receiverInfo.address,
+        consignee_addr: this.consignee.address,
         goods: this.checkedGoodsItems.map(v => ({
           goods_id: v.goods_id,
-          goods_number: v.goodsNum,
+          goods_number: v.goods_number,
           goods_price: v.goods_price
         }))
       }
@@ -179,49 +186,21 @@ export default {
       return [null, res.data.message.pay]
     },
     clearCheckedGoods () {
-      const yougou = uni.getStorageSync('yougou')
+      let cart = this.$yougou.getData('cart')
 
-      if (!yougou) {
-        return
-      }
+      const unCheckedGoodsItems = cart.filter(goodsItem => !goodsItem.checked)
 
-      if (yougou.cart) {
-        let unCheckedGoods = yougou.cart.filter(goodsItem => !goodsItem.checked)
-        yougou.cart = unCheckedGoods
-      }
+      cart = unCheckedGoodsItems
 
-      uni.setStorageSync('yougou', yougou)
-    }
-  },
-  computed: {
-    totalPrice () {
-      return this.checkedGoodsItems.reduce((totalPrice, checkedGoodsItem) => {
-        return totalPrice += checkedGoodsItem.goods_price * checkedGoodsItem.goodsNum
-      }, 0)
-    },
-    checkedGoodsNum () {
-      return this.checkedGoodsItems.length
-    },
-    hasReceiverInfo () {
-      const keys = ['address', 'name', 'phone']
-
-      return keys.every(key => this.receiverInfo[key] !== '' && this.receiverInfo[key])
+      this.$yougou.setData('cart', cart)
     }
   },
   async onShow () {
-    const yougou = uni.getStorageSync('yougou')
+    const cart = this.$yougou.getData('cart')
+    const consignee = this.$yougou.getData('consignee')
 
-    if (!yougou) {
-      this.checkedGoodsItems = []
-      this.receiverInfo = {}
-      return
-    }
-
-    const goodsItems = yougou.cart
-    const receiverInfo = yougou.receiverInfo
-
-    this.checkedGoodsItems = goodsItems ? goodsItems.filter(goodsItem => goodsItem.checked) : []
-    this.receiverInfo = receiverInfo ? receiverInfo : {}
+    this.consignee = consignee ? consignee : {}
+    this.checkedGoodsItems = cart ? cart.filter(goodsItem => goodsItem.checked) : []
   }
 }
 </script>

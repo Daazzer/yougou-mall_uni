@@ -89,26 +89,13 @@ export default {
       return p
     },
     saveUserInfo () {
-      let yougou = uni.getStorageSync('yougou')
-
-      if (!yougou) {
-        yougou = {}
-      }
-
-      yougou.user = this.user
-
-      uni.setStorageSync('yougou', yougou)
+      this.$yougou.setData('user', { ...this.user })
     }
   },
   onShow () {
-    const yougou = uni.getStorageSync('yougou')
+    const user = this.$yougou.getData('user')
 
-    if (!yougou) {
-      this.user = {}
-      return
-    }
-
-    this.user = yougou.user ? yougou.user : {}
+    this.user = user ? user : {}
   }
 }
 </script>

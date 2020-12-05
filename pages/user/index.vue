@@ -63,6 +63,22 @@ export default {
       user: {}
     }
   },
+  computed: {
+    getUserOptionItems () {
+      const userOptionItems = [
+        { text: '联系客服', subText: '400-618-4000', icon: 'kefu', openType: 'contact' },
+        { text: '意见反馈', icon: 'fankuitianbao' },
+        { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' },
+        { text: '注销', icon: 'zhuxiao' }
+      ]
+
+      if (!this.user.token) {
+        return userOptionItems.filter((v, i) => i < 3)
+      }
+
+      return userOptionItems
+    }
+  },
   methods: {
     handleOption (key) {
       switch (key) {
@@ -106,31 +122,7 @@ export default {
       uni.navigateTo({ url: '/pages/order/index' + type })
     },
     setYouGouUser () {
-      let yougou = uni.getStorageSync('yougou')
-
-      if (!yougou) {
-        yougou = {}
-      }
-
-      yougou.user = this.user
-
-      uni.setStorageSync('yougou', yougou)
-    }
-  },
-  computed: {
-    getUserOptionItems () {
-      const userOptionItems = [
-        { text: '联系客服', subText: '400-618-4000', icon: 'kefu', openType: 'contact' },
-        { text: '意见反馈', icon: 'fankuitianbao' },
-        { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' },
-        { text: '注销', icon: 'zhuxiao' }
-      ]
-
-      if (!this.user.token) {
-        return userOptionItems.filter((v, i) => i < 3)
-      }
-
-      return userOptionItems
+      this.$yougou.setData('user', { ...this.user })
     }
   },
   onShow () {
@@ -138,14 +130,10 @@ export default {
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {
       page.getTabBar().setData({ currentIndex: 3 })
     }
-    const yougou = uni.getStorageSync('yougou')
 
-    if (!yougou) {
-      this.user = {}
-      return
-    }
+    const user = this.$yougou.getData('user')
 
-    this.user = yougou.user ? yougou.user : {}
+    this.user = user ? user : {}
   }
 }
 </script>
