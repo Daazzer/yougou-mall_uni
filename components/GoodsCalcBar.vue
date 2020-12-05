@@ -87,7 +87,8 @@ export default {
   right: 0;
   display: flex;
   justify-content: space-between;
-  height: 83rpx;
+  align-items: center;
+  height: 100rpx;
   padding: 15rpx 22rpx;
   border-top: 1px solid #fafafa;
   background-color: #fff;
@@ -96,17 +97,16 @@ export default {
     align-items: center;
     .checked-all-btn {
       display: flex;
-      align-items: flex-end;
       margin-right: 36rpx;
       &__label {
         margin-left: 24rpx;
         margin-bottom: 3rpx;
-        font-size: 21rpx;
+        font-size: 28rpx;
         color: #8a8a8a;
       }
     }
     .total {
-      $fontSize: 26rpx;
+      $fontSize: 30rpx;
       font-size: $fontSize;
       font-weight: 600;
       &__text {
@@ -126,16 +126,19 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 52rpx;
+      height: 60rpx;
       padding: 0;
       margin: 0;
-      border-radius: 26rpx;
-      font-size: 21rpx;
+      border-radius: 30rpx;
+      font-size: 24rpx;
       color: #fff;
+      &::after {
+        content: none;
+      }
     }
     .del-btn {
       @extend %btn;
-      width: 120rpx;
+      width: 130rpx;
       background-color: #fcaa23;
     }
     .settle-btn {
