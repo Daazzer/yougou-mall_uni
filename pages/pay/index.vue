@@ -22,7 +22,7 @@
         :goodsImage="checkedGoodsItem.goodsImage"
         :goodsName="checkedGoodsItem.goods_name"
         :goodsPrice="checkedGoodsItem.goods_price"
-        :goodsCount="checkedGoodsItem.goodsNum"
+        :goodsCount="checkedGoodsItem.goods_number"
       />
     </view>
     <GoodsCalcBar
