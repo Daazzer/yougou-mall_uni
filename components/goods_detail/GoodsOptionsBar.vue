@@ -6,8 +6,8 @@
         open-type="contact"
         plain
       >
-        <text class="iconfont icon-kefu icon" />
-        <text class="goods-options-opt-item__text">联系客服</text>
+        <text class="iconfont icon-kefu icon text" />
+        <text class="goods-options-opt-item__text text">联系客服</text>
       </button>
       <navigator
         class="goods-options-opt-item"
@@ -16,7 +16,7 @@
       >
         <text class="iconfont icon-gouwuche icon" />
         <text class="goods-options-opt-item__text">购物车</text>
-        <text class="badge" v-if="goodsNum > 0">{{ goodsNum > 99 ? '99+' : goodsNum }}</text>
+        <text class="badge" v-if="goods_number > 0">{{ goods_number > 99 ? '99+' : goods_number }}</text>
       </navigator>
     </view>
     <view class="goods-options-bar__btn">
@@ -38,7 +38,7 @@
 export default {
   name: 'GoodsOptionsBar',
   props: {
-    goodsNum: {
+    goods_number: {
       type: Number,
       default: 0
     },
@@ -75,7 +75,7 @@ export default {
     line-height: normal;
     border-radius: 0;
     overflow: visible;
-    text {
+    .text {
       color: #434343;
     }
     & + .goods-options-opt-item {

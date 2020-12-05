@@ -50,7 +50,7 @@
     </view>
     <view class="goods-intro--none" v-else>暂无图文详情</view>
     <GoodsOptionsBar
-      :goodsNum="goodsNum"
+      :goods_number="goods_number"
       :goods_id="goods_id"
       @add-to-cart="addToCart"
     />
@@ -59,6 +59,7 @@
 
 <script>
 import GoodsOptionsBar from '@/components/goods_detail/GoodsOptionsBar.vue'
+import { getYougou, setYougou } from '@/utils/storage'
 
 export default {
   name: 'GoodsDetail',
@@ -68,7 +69,7 @@ export default {
   data () {
     return {
       goods_id: 0,
-      goodsNum: 0,
+      goods_number: 0,
       goodsDetail: {
         pics: []
       },
@@ -104,77 +105,49 @@ export default {
       uni.previewImage({ urls, current })
     },
     favoriteGoods () {
-      const goods_id = this.goods_id
       let title = '收藏成功'
       let icon = 'success'
-      let yougou = uni.getStorageSync('yougou')
+      let favoriteGoodsItems = this.$yougou.favoriteGoodsItems
 
-      if (!yougou) {
-        yougou = {}
-      }
+      favoriteGoodsItems = favoriteGoodsItems ? favoriteGoodsItems : []
 
-      const favoriteGoods = new Set(yougou.favoriteGoods)
+      const delIndex = favoriteGoodsItems.findIndex(favoriteGoodsItem => favoriteGoodsItem.goods_id === this.goods_id)
 
-      if (!favoriteGoods.has(goods_id)) {
-        favoriteGoods.add(goods_id)
-      } else {
+      if (delIndex > -1) {
         title = '取消收藏'
         icon = 'none'
-        favoriteGoods.delete(goods_id)
+        favoriteGoodsItems.splice(delIndex, 1)
+      } else {
+        favoriteGoodsItems.push({ ...this.goodsDetail })
       }
 
-      yougou.favoriteGoods = [...favoriteGoods]
-
-      uni.setStorageSync('yougou', yougou)
+      this.$yougou.setData('favoriteGoodsItems', favoriteGoodsItems)
       this.isFavoriteGoods = icon === 'success'
       uni.showToast({ title, icon })
     },
     addToCart () {
-      let yougou = uni.getStorageSync('yougou')
+      let cart = this.$yougou.getData('cart')
 
-      if (!yougou) {
-        yougou = {}
-      }
+      cart = cart ? cart : []
 
-      let cart = yougou.cart
+      let goodsItemIndex = cart.findIndex(goodsItem => goodsItem.goods_id === this.goods_id)
 
-      if (!cart) {
-        cart = []
-      }
-
-      let goodsItem = cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
-      this.goodsNum++
-
-      if (!goodsItem) {
-        const {
-          goods_id,
-          goods_name,
-          goods_price,
-          goods_small_logo
-        } = this.goodsDetail
-
-        goodsItem = {
+      if (goodsItemIndex > -1) {
+        this.goods_number = ++cart[goodsItemIndex].goods_number
+      } else {
+        this.goods_number = 0
+        const goodsItem = {
           checked: true,
-          goods_id,
-          goods_name,
-          goods_price,
-          goodsImage: goods_small_logo,
-          goodsNum: this.goodsNum
+          goods_id: this.goods_id,
+          goods_name: this.goodsDetail.goods_name,
+          goods_price: this.goodsDetail.goods_price,
+          goodsImage: this.goodsDetail.goods_small_logo,
+          goods_number: ++this.goods_number
         }
         cart.push(goodsItem)
-      } else {
-        goodsItem.goodsNum = this.goodsNum
-        for (let i = 0; i < cart.length; i++) {
-          if (cart[i].goods_id === goodsItem.goods_id) {
-            cart[i] = goodsItem
-            break
-          }
-        }
       }
 
-      yougou.cart = cart
-
-      uni.setStorageSync('yougou', yougou)  // 如果异步修改会导致跨页面的时候数据不能实时更新
+      this.$yougou.setData('cart', cart)
       uni.showToast({ title: '已加入购物车' })
     }
   },
@@ -184,20 +157,20 @@ export default {
     this.renderGoodsDetail(Number(goods_id))
   },
   onShow () {
-    const yougou = uni.getStorageSync('yougou')
+    let favoriteGoodsItems = this.$yougou.getData('favoriteGoodsItems')
+    let cart = this.$yougou.getData('cart')
 
-    if (!yougou) {
-      return
+    favoriteGoodsItems = favoriteGoodsItems ? favoriteGoodsItems : []
+    cart = cart ? cart : []
+
+    const favoriteItemIndex = favoriteGoodsItems.findIndex(favoriteGoodsItem => favoriteGoodsItem.goods_id === this.goods_id)
+    const goodsItem = cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
+
+    if (goodsItem) {
+      this.goods_number = goodsItem.goods_number
     }
 
-    const favoriteGoods = new Set(yougou.favoriteGoods)
-
-    if (yougou.cart) {
-      const goodsItem = yougou.cart.find(goodsItem => goodsItem.goods_id === this.goods_id)
-      this.goodsNum = goodsItem ? goodsItem.goodsNum : 0
-    }
-
-    this.isFavoriteGoods = favoriteGoods.has(this.goods_id)
+    this.isFavoriteGoods = favoriteItemIndex > -1
   },
   onPullDownRefresh () {
     Promise
