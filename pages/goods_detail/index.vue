@@ -82,6 +82,12 @@ export default {
     },
     hasPics () {
       return this.goodsDetail.pics.length > 0
+    },
+    shareMsg () {
+      return {
+        title: this.goodsDetail.goods_name,
+        imageUrl: this.goodsDetail.goods_big_logo
+      }
     }
   },
   methods: {
@@ -107,7 +113,7 @@ export default {
     favoriteGoods () {
       let title = '收藏成功'
       let icon = 'success'
-      let favoriteGoodsItems = this.$yougou.favoriteGoodsItems
+      let favoriteGoodsItems = this.$yougou.getData('favoriteGoodsItems')
 
       favoriteGoodsItems = favoriteGoodsItems ? favoriteGoodsItems : []
 
@@ -178,16 +184,10 @@ export default {
       .then(() => uni.stopPullDownRefresh())
   },
   onShareAppMessage () {
-    return {
-      title: this.goodsDetail.goods_name,
-      imageUrl: this.goodsDetail.goods_big_logo
-    }
+    return this.shareMsg
   },
   onAddToFavorites () {
-    return {
-      title: this.goodsDetail.goods_name,
-      imageUrl: this.goodsDetail.goods_big_logo
-    }
+    return this.shareMsg
   }
 }
 </script>
