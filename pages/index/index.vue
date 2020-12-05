@@ -88,6 +88,12 @@ export default {
       recommendItems: []
     }
   },
+  filters: {
+    goodsListUrl (url) {
+      const query = url.split('=')[1]
+      return '/pages/goods_list/index?query=' + query
+    }
+  },
   methods: {
     async renderCarousel () {
       const [err, res] = await this.$api.getSwiperdata()
@@ -144,12 +150,6 @@ export default {
       }
 
       this.recommendItems = recommendItems
-    }
-  },
-  filters: {
-    goodsListUrl (url) {
-      const query = url.split('=')[1]
-      return '/pages/goods_list/index?query=' + query
     }
   },
   onLoad() {
