@@ -9,7 +9,7 @@
         :goodsImage="goodsItem.goodsImage"
         :goodsName="goodsItem.goods_name"
         :goodsPrice="goodsItem.goods_price"
-        :goodsNum="goodsItem.goodsNum"
+        :goodsNum="goodsItem.goods_number"
         @checked-goods="handleCheckedGoods(index)"
         @add-goods-num="handleAddGoodsNum(index)"
         @reduce-goods-num="handleReduceGoodsNum(index)"
@@ -19,7 +19,7 @@
     <GoodsCalcBar
       bottom="113rpx"
       checkedAllBtn
-      :deleteBtn="deleteBtn"
+      :showDeleteBtn="showDeleteBtn"
       :isCheckedAll="isCheckedAll"
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
@@ -48,6 +48,39 @@ export default {
       goodsItems: []
     }
   },
+  computed: {
+    isCheckedAll () {
+      const unCheckedIndex = this.goodsItems.findIndex(goodsItem => goodsItem.checked === false)
+      return unCheckedIndex === -1 && this.goodsItems.length > 0
+    },
+    totalPrice () {
+      return this.goodsItems.reduce((totalPrice, goodsItem) => {
+        if (goodsItem.checked) {
+          totalPrice += goodsItem.goods_price * goodsItem.goods_number
+        }
+        return totalPrice
+      }, 0)
+    },
+    goodsTotalNum () {
+      return this.goodsItems.reduce((totalNum, goodsItem) => {
+        if (goodsItem.checked) {
+          totalNum += goodsItem.goods_number
+        }
+        return totalNum
+      }, 0)
+    },
+    checkedGoodsNum () {
+      return this.goodsItems.reduce((checkedNum, goodsItem) => {
+        if (goodsItem.checked) {
+          checkedNum++
+        }
+        return checkedNum
+      }, 0)
+    },
+    showDeleteBtn () {
+      return this.goodsItems.length > 0
+    }
+  },
   methods: {
     handleCheckedGoods (index) {
       const checked = this.goodsItems[index].checked
@@ -55,12 +88,12 @@ export default {
       this.setCart()
     },
     handleAddGoodsNum (index) {
-      this.goodsItems[index].goodsNum++
+      this.goodsItems[index].goods_number++
       this.setCart()
     },
     handleReduceGoodsNum (index) {
-      if (this.goodsItems[index].goodsNum > 1) {
-        this.goodsItems[index].goodsNum--
+      if (this.goodsItems[index].goods_number > 1) {
+        this.goodsItems[index].goods_number--
         this.setCart()
       }
     },
@@ -77,15 +110,7 @@ export default {
       this.setCart()
     },
     setCart () {
-      let yougou = uni.getStorageSync('yougou')
-
-      if (!yougou) {
-        yougou = {}
-      }
-
-      yougou.cart = this.goodsItems
-
-      uni.setStorageSync('yougou', yougou)
+      this.$yougou.setData('cart', [...this.goodsItems])
     },
     deleteGoodsItems () {
       if (this.checkedGoodsNum <= 0) {
@@ -108,57 +133,15 @@ export default {
       uni.navigateTo({ url: '/pages/pay/index' })
     }
   },
-  computed: {
-    isCheckedAll () {
-      if (this.goodsItems.length <= 0) {
-        return false
-      }
-      return this.goodsItems.every(goodsItem => goodsItem.checked)
-    },
-    totalPrice () {
-      return this.goodsItems.reduce((totalPrice, goodsItem) => {
-        if (goodsItem.checked) {
-          totalPrice += goodsItem.goods_price * goodsItem.goodsNum
-        }
-        return totalPrice
-      }, 0)
-    },
-    goodsTotalNum () {
-      return this.goodsItems.reduce((totalNum, goodsItem) => {
-        if (goodsItem.checked) {
-          totalNum += goodsItem.goodsNum
-        }
-        return totalNum
-      }, 0)
-    },
-    checkedGoodsNum () {
-      return this.goodsItems.reduce((checkedNum, goodsItem) => {
-        if (goodsItem.checked) {
-          checkedNum++
-        }
-        return checkedNum
-      }, 0)
-    },
-    deleteBtn () {
-      return this.goodsItems.length > 0
-    }
-  },
   onShow () {
     const page = this.$mp.page
     if (typeof page.getTabBar === 'function' && page.getTabBar()) {
       page.getTabBar().setData({ currentIndex: 2 })
     }
 
-    const yougou = uni.getStorageSync('yougou')
+    const cart = this.$yougou.getData('cart')
 
-    if (!yougou) {
-      this.goodsItems = []
-      return
-    }
-
-    const goodsItems = yougou.cart
-
-    this.goodsItems = goodsItems ? goodsItems : []
+    this.goodsItems = cart ? cart : []
   }
 }
 </script>
