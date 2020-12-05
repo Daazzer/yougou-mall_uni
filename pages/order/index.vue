@@ -61,6 +61,9 @@ export default {
       orderItems: []
     }
   },
+  filters: {
+    dateFormat
+  },
   methods: {
     switchNav (type) {
       this.type = type
@@ -100,9 +103,6 @@ export default {
 
       this.isLoadingOrderItems = false
     }
-  },
-  filters: {
-    dateFormat
   },
   onLoad ({ type }) {
     this.type = type ? Number(type) : 1
