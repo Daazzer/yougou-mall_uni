@@ -145,14 +145,14 @@ export default {
             err.msg ? setTimeout(() => {
               uni.navigateTo({ url: '/pages/order/index?type=2' })
               this.isPaying = false
-            }, 3000) : this.isPaying = false
+            }, 1600) : this.isPaying = false
           } else {
             uni.showToast({ title: res.data.message })
             setTimeout(() => {
               uni.redirectTo({ url: '/pages/order/index?type=3' })
               this.isPaying = false
               this.clearCheckedGoods()
-            }, 3000)
+            }, 1600)
           }
         }
       })
