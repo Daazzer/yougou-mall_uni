@@ -47,5 +47,7 @@ export const dateFormat = (timeStamp) => {
   const mm = date.getMinutes()
   const ss = date.getSeconds()
 
-  return [YYYY, MM, DD].join('/') + ' ' + [hh, mm, ss].join(':')
+  const doubleDigit = digit => digit >= 10 ? digit : '0' + digit
+
+  return [YYYY, MM, DD].join('/') + ' ' + [hh, doubleDigit(mm), doubleDigit(ss)].join(':')
 }

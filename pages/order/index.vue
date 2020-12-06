@@ -27,7 +27,7 @@
         </view>
         <view class="order-item-field order-date">
           <view class="order-label">订单日期</view>
-          <view class="order-content">{{ orderItem.create_time | dateFormat }}</view>
+          <view class="order-content">{{ orderItem.create_time * 1000 | dateFormat }}</view>
         </view>
       </view>
     </view>
