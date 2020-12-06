@@ -1,5 +1,5 @@
 <template>
-  <view class="goods-options-bar">
+  <view class="goods-options-bar" :style="{ bottom }">
     <view class="goods-options-bar__opt">
       <button
         class="goods-options-opt-item"
@@ -45,6 +45,10 @@ export default {
     goods_id: {
       type: Number,
       default: 0
+    },
+    bottom: {
+      type: [String, Number],
+      default: 0
     }
   }
 }
@@ -55,7 +59,6 @@ export default {
   display: flex;
   justify-content: space-between;
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
   height: 120rpx;
