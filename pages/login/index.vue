@@ -129,7 +129,7 @@ page {
     word-break: break-all;
     font-size: 36rpx;
     .user-greeting {
-      margin-bottom: 20rpx;
+      margin-bottom: 40rpx;
     }
     .user-avatar {
       width: 120rpx;

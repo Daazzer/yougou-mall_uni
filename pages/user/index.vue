@@ -197,7 +197,7 @@ page {
       background-color: #fff;
     }
     .order-option {
-      padding: 30rpx 0 14rpx;
+      padding: 30rpx 0 30rpx;
       margin-bottom: 20rpx;
       &, &__item {
         display: flex;
@@ -206,7 +206,7 @@ page {
       &__item {
         flex-direction: column;
         align-items: center;
-        font-size: 26rpx;
+        font-size: 28rpx;
         color: #474747;
         &.active {
           color: #ea4350;
@@ -219,15 +219,13 @@ page {
     }
     .user-option {
       padding: 0 34rpx 0 28rpx;
-      min-height: 520rpx;
       &__item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 30rpx 10rpx;
-        font-size: 26rpx;
+        font-size: 30rpx;
         border: 0;
-        border-bottom: 1px solid #c8c8c8;
         border-radius: 0;
         color: #434343;
         &::after {
@@ -235,7 +233,7 @@ page {
         }
         .iconfont {
           margin-right: 28rpx;
-          font-size: 45rpx;
+          font-size: 50rpx;
         }
       }
       &-content {
