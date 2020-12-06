@@ -124,7 +124,14 @@ export default {
         icon = 'none'
         favoriteGoodsItems.splice(delIndex, 1)
       } else {
-        favoriteGoodsItems.push({ ...this.goodsDetail })
+        const favoriteGoodsItem = {
+          goods_id: this.goodsDetail.goods_id,
+          goods_name: this.goodsDetail.goods_name,
+          goods_price: this.goodsDetail.goods_price,
+          goods_small_logo: this.goodsDetail.goods_small_logo
+        }
+
+        favoriteGoodsItems.push(favoriteGoodsItem)
       }
 
       this.$yougou.setData('favoriteGoodsItems', favoriteGoodsItems)
