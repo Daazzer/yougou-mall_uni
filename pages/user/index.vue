@@ -58,7 +58,8 @@ export default {
         { text: '待付款', icon: 'icon-test' },
         { text: '待收货', icon: 'daishouhuo' },
         { text: '退货/退款', icon: 'tuihuo' },
-        { text: '全部订单', icon: 'quanbudingdan01' }
+        { text: '全部订单', icon: 'quanbudingdan01' },
+        { text: '我的收藏', icon: 'shoucang' }
       ],
       user: {}
     }
@@ -90,6 +91,7 @@ export default {
           break
         case '全部订单':
         case '待付款':
+        case '我的收藏':
           this.orderOption(key)
           break
       }
@@ -113,13 +115,17 @@ export default {
         return
       }
 
-      let type = ''
+      let url = '/pages/order/index'
 
       if (key === '待付款') {
-        type = '?type=2'
+        url = '/pages/order/index?type=2'
       }
 
-      uni.navigateTo({ url: '/pages/order/index' + type })
+      if (key === '我的收藏') {
+        url = '/pages/collect/index'
+      }
+
+      uni.navigateTo({ url })
     },
     setYouGouUser () {
       this.$yougou.setData('user', { ...this.user })
