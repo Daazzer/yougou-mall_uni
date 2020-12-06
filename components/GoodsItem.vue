@@ -8,9 +8,11 @@
         @click="$emit('checked-goods')"
       />
     </view>
-    <navigator class="goods-item-link" :url="url">
-      <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
-      <view class="goods-item__info">
+    <template class="goods-item-link">
+      <navigator :url="url">
+        <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
+      </navigator>
+      <view class="goods-item__info" @click="linkToUrl">
         <view class="goods-name">{{ goodsName }}</view>
         <view class="goods-body">
           <view class="goods-price" v-if="goodsPrice || goodsPrice === 0">¥ {{ goodsPrice || 0 }}</view>
@@ -19,7 +21,7 @@
           </view>
         </view>
       </view>
-    </navigator>
+    </template>
     <view class="goods-item__option" v-if="goodsNum !== '' && goodsNum">
       <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce-goods-num')" />
       <view class="goods-num">{{ goodsNum }}</view>
@@ -37,8 +39,8 @@ export default {
       required: true
     },
     goodsChecked: {
-      type: [Boolean, undefined],
-      default: undefined
+      type: [Boolean, null],
+      default: null
     },
     goodsImage: {
       type: String,
@@ -49,20 +51,29 @@ export default {
       required: true
     },
     goodsPrice: {
-      type: [Number, undefined],
-      default: undefined
+      type: [Number, null],
+      default: null
     },
     goodsNum: {
       type: Number
     },
     goodsCount: {
-      type: [Number, undefined],
-      default: undefined
+      type: [Number, null],
+      default: null
     }
   },
   computed: {
     isShowSelectBtn () {
       return typeof this.goodsChecked === 'boolean'
+    }
+  },
+  methods: {
+    linkToUrl () {
+      if (this.goodsChecked === null) {
+        uni.navigateTo({ url: this.url })
+      } else {
+        this.$emit('checked-goods')
+      }
     }
   }
 }
