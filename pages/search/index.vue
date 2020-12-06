@@ -114,6 +114,7 @@ export default {
     input {
       height: 100%;
       padding-left: 70rpx;
+      padding-right: 40rpx;
       font-size: 30rpx;
       border-radius: 40rpx;
       background-color: #e7e7e7;
