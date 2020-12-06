@@ -1,5 +1,5 @@
 <template>
-  <view class="pay">
+  <view :class="{ pay: true, 'iPhone-X': isIPhoneX }">
     <view class="delivery-address" @click="chooseAddress">
       <view class="delivery-address__content" v-if="hasConsignee">
         <view class="delivery-receiver-address">{{ consignee.address }}</view>
@@ -26,6 +26,7 @@
       />
     </view>
     <GoodsCalcBar
+      :bottom="isIPhoneX ? '20rpx' : 0"
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
       :disabledSettleBtn="!(hasConsignee && checkedGoodsNum > 0) || isPaying"
@@ -51,7 +52,8 @@ export default {
     return {
       checkedGoodsItems: [],
       consignee: {},
-      isPaying: false
+      isPaying: false,
+      isIPhoneX: false
     }
   },
   computed: {
@@ -195,6 +197,10 @@ export default {
       this.$yougou.setData('cart', cart)
     }
   },
+  onLoad () {
+    const sysInfo = uni.getSystemInfoSync()
+    this.isIPhoneX = sysInfo.model === 'iPhone X'
+  },
   async onShow () {
     const cart = this.$yougou.getData('cart')
     const consignee = this.$yougou.getData('consignee')
@@ -214,6 +220,9 @@ page {
 <style lang="scss" scoped>
 .pay {
   padding: 20rpx 20rpx 100rpx;
+  &.iPhone-X {
+    padding: 20rpx 20rpx 120rpx;
+  }
 }
 .delivery-address, .checked-goods-list {
   background-color: #fff;
