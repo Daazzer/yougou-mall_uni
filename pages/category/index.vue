@@ -120,10 +120,10 @@ export default {
         content: "";
         position: absolute;
         left: 0;
-        top: 40rpx;
+        top: 36rpx;
         display: block;
-        width: 4rpx;
-        height: 43rpx;
+        width: 5rpx;
+        height: 50rpx;
         background-color: #ea4350;
       }
     }
