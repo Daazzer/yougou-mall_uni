@@ -58,8 +58,8 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100rpx;
-  padding: 20rpx 30rpx 6rpx 40rpx;
+  height: 120rpx;
+  padding: 30rpx 30rpx 0 40rpx;
   box-sizing: border-box;
   background-color: #fff;
   &__opt {

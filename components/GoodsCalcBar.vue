@@ -126,10 +126,10 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 70rpx;
+      height: 65rpx;
       padding: 0;
       margin: 0;
-      border-radius: 35rpx;
+      border-radius: 32.5rpx;
       font-size: 24rpx;
       color: #fff;
       &::after {
@@ -144,7 +144,7 @@ export default {
     .settle-btn {
       @extend %btn;
       margin-left: 30rpx;
-      width: 150rpx;
+      width: 165rpx;
       background-color: #ea4350;
       &.disabled {
         background-color: #b6b6b6;

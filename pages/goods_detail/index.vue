@@ -207,7 +207,7 @@ page {
 
 <style lang="scss" scoped>
 .goods-detail {
-  padding-bottom: 110rpx;
+  padding-bottom: 140rpx;
 }
 .goods-pics {
   background-color: #fff;
