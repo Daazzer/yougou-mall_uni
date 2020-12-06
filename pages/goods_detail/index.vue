@@ -41,7 +41,7 @@
       </view>
       <view class="goods-info__content">{{ goodsDetail.goods_name }}</view>
     </view>
-    <view class="goods-intro" v-if="goodsDetail.goods_introduce">
+    <view class="goods-intro" v-if="goodsDetail.goods_introduce && goodsDetail.goods_introduce !== ''">
       <view class="goods-intro__title">图文详情</view>
       <rich-text
         class="goods-intro__content"
@@ -200,7 +200,7 @@ page {
 
 <style lang="scss" scoped>
 .goods-detail {
-  padding-bottom: 94rpx;
+  padding-bottom: 110rpx;
 }
 .goods-pics {
   background-color: #fff;
@@ -223,17 +223,17 @@ page {
   &__head {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20rpx;
+    margin-bottom: 30rpx;
     .goods-price {
       margin-top: 16rpx;
-      font-size: 36rpx;
+      font-size: 40rpx;
       color: #ea4350;
     }
     .goods-opt {
       button {
         display: inline;
         padding: 0;
-        font-size: 40rpx;
+        font-size: 45rpx;
         color: #707070;
         border: none;
         line-height: none;
@@ -247,7 +247,7 @@ page {
     }
   }
   &__content {
-    font-size: 30rpx;
+    font-size: 34rpx;
     color: #434343;
   }
 }
