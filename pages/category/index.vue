@@ -103,7 +103,7 @@ export default {
   position: fixed;
   left: 0;
   top: 100rpx;
-  width: 182rpx;
+  width: 180rpx;
   height: calc(100vh - 213rpx);
   background-color: #f3f3f3;
   z-index: 5;
@@ -131,7 +131,7 @@ export default {
 }
 .category-list {
   padding-top: 100rpx;
-  padding-left: 182rpx;
+  padding-left: 180rpx;
 }
 .category-title {
   padding-top: 20rpx;
@@ -149,9 +149,11 @@ export default {
   flex-wrap: wrap;
   padding: 0 35rpx;
   &__item {
-    margin: 0 0 30rpx 60rpx;
+    margin: 0 0 35rpx 35rpx;
     font-size: 24rpx;
     color: #2e2e2e;
+    width: 140rpx;
+    word-break: break-all;
     &:nth-child(3n + 1) {
       margin-left: 0;
     }
