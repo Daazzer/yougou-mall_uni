@@ -58,8 +58,8 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 94rpx;
-  padding: 15rpx 30rpx 6rpx 62rpx;
+  height: 100rpx;
+  padding: 20rpx 30rpx 6rpx 40rpx;
   box-sizing: border-box;
   background-color: #fff;
   &__opt {
@@ -84,24 +84,24 @@ export default {
     .badge {
       position: absolute;
       display: block;
-      left: 38rpx;
+      left: 45rpx;
       top: -15rpx;
       height: 30rpx;
       padding: 0 10rpx;
       border-radius: 15rpx;
-      font-size: 20rpx;
+      font-size: 22rpx;
       line-height: 30rpx;
       text-align: center;
       color: #fff;
       background-color: #ff2d2d;
     }
     .icon {
-      font-size: 34rpx;
-      line-height: 34rpx;
+      font-size: 42rpx;
+      line-height: 35rpx;
       margin-bottom: 10rpx;
     }
     &__text {
-      font-size: 20rpx;
+      font-size: 24rpx;
     }
   }
   &__btn {
@@ -112,9 +112,9 @@ export default {
       justify-content: center;
       align-items: center;
       width: 196rpx;
-      height: 60rpx;
-      border-radius: 30rpx;
-      font-size: 26rpx;
+      height: 70rpx;
+      border-radius: 35rpx;
+      font-size: 30rpx;
       font-weight: normal;
       color: #fff;
       & + .btn {

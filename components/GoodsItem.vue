@@ -74,6 +74,7 @@ export default {
   padding: 10rpx 0 10rpx 15rpx;
   &, &-link {
     display: flex;
+    align-items: center;
   }
   &__select-bar {
     display: flex;
@@ -102,6 +103,7 @@ export default {
     }
     .goods-name {
       display: -webkit-box;
+      margin-bottom: 25rpx;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
       line-clamp: 3;

@@ -126,10 +126,10 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 60rpx;
+      height: 70rpx;
       padding: 0;
       margin: 0;
-      border-radius: 30rpx;
+      border-radius: 35rpx;
       font-size: 24rpx;
       color: #fff;
       &::after {
