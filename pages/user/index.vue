@@ -33,7 +33,7 @@
           v-for="userOptionItem in getUserOptionItems"
           :key="userOptionItem.text"
           :open-type="userOptionItem.openType"
-          @click="handleOption(userOptionItem.text)"
+          @click="handleOption(userOptionItem.text, userOptionItem.subText)"
         >
           <view class="user-option-content">
             <text :class="'iconfont icon-' + userOptionItem.icon" />
@@ -67,7 +67,7 @@ export default {
   computed: {
     getUserOptionItems () {
       const userOptionItems = [
-        { text: '联系客服', subText: '400-618-4000', icon: 'kefu', openType: 'contact' },
+        { text: '联系客服', subText: '400-618-4000', icon: 'kefu' },
         { text: '意见反馈', icon: 'fankuitianbao' },
         { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' },
         { text: '注销', icon: 'zhuxiao' }
@@ -81,13 +81,16 @@ export default {
     }
   },
   methods: {
-    handleOption (key) {
+    handleOption (key, data) {
       switch (key) {
         case '注销':
           this.logout()
           break
         case '意见反馈':
           uni.navigateTo({ url: '/pages/feedback/index' })
+          break
+        case '联系客服':
+          uni.makePhoneCall({ phoneNumber: data })
           break
         case '全部订单':
         case '待付款':
