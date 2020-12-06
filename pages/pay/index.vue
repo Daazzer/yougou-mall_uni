@@ -213,7 +213,7 @@ page {
 
 <style lang="scss" scoped>
 .pay {
-  padding: 20rpx 20rpx 90rpx;
+  padding: 20rpx 20rpx 100rpx;
 }
 .delivery-address, .checked-goods-list {
   background-color: #fff;

@@ -17,7 +17,7 @@
     </view>
     <view class="cart-list--none" v-else>购物车空空如也...</view>
     <GoodsCalcBar
-      bottom="113rpx"
+      bottom="110rpx"
       checkedAllBtn
       :showDeleteBtn="showDeleteBtn"
       :isCheckedAll="isCheckedAll"
@@ -148,7 +148,7 @@ export default {
 
 <style lang="scss" scoped>
 .cart {
-  padding: 27rpx 0 200rpx;
+  padding: 20rpx 0 230rpx;
   &-list {
     padding: 0 26rpx;
     &--none {

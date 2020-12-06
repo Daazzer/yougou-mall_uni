@@ -1,14 +1,13 @@
 <template>
   <view class="goods-item">
-    <view class="goods-item__select-bar" v-if="isShowSelectBtn">
+    <view class="goods-item__check-bar" v-if="isShowSelectBtn" @click="$emit('checked-goods')">
       <icon
         size="40rpx"
         :type="goodsChecked ? 'success' : 'circle'"
         :color="goodsChecked ? '#e03440': '#8a8a8a'"
-        @click="$emit('checked-goods')"
       />
     </view>
-    <template class="goods-item-link">
+    <view class="goods-item-link">
       <navigator :url="url">
         <image class="goods-item__image" :src="goodsImage || '/static/images/empty.png'" lazy-load />
       </navigator>
@@ -21,7 +20,7 @@
           </view>
         </view>
       </view>
-    </template>
+    </view>
     <view class="goods-item__option" v-if="goodsNum !== '' && goodsNum">
       <text class="goods-btn iconfont icon-jianhao" @click="$emit('reduce-goods-num')" />
       <view class="goods-num">{{ goodsNum }}</view>
@@ -81,13 +80,14 @@ export default {
 
 <style lang="scss" scoped>
 .goods-item {
+  display: flex;
   position: relative;
   padding: 10rpx 0 10rpx 15rpx;
-  &, &-link {
+  &-link {
     display: flex;
     align-items: center;
   }
-  &__select-bar {
+  &__check-bar {
     display: flex;
     justify-content: center;
     align-items: center;

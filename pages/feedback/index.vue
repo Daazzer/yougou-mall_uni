@@ -94,7 +94,7 @@ page {
     background-color: #fff;
   }
   &__quest-type {
-    padding: 15rpx 47rpx 19rpx 29rpx;
+    padding: 25rpx 35rpx;
     margin-bottom: 20rpx;
     .quest-type-title {
       margin-bottom: 20rpx;
@@ -106,14 +106,14 @@ page {
       flex-wrap: wrap;
       &__item {
         width: 180rpx;
-        height: 60rpx;
+        height: 70rpx;
         margin-right: 45rpx;
-        margin-bottom: 20rpx;
+        margin-bottom: 25rpx;
         text-align: center;
-        line-height: 60rpx;
+        line-height: 70rpx;
         font-size: 28rpx;
         border: 1rpx solid transparent;
-        border-radius: 30rpx;
+        border-radius: 35rpx;
         color: #545353;
         background-color: #ededed;
         &.active {
@@ -129,29 +129,29 @@ page {
   }
   &__quest-content {
     height: 391rpx;
-    width: 670rpx;
+    width: 645rpx;
     padding: 30rpx 35rpx;
     margin-bottom: 20rpx;
     font-size: 32rpx;
   }
   &__upload {
-    padding: 20rpx 18rpx 13rpx;
+    padding: 30rpx 18rpx;
     margin-bottom: 35rpx;
     font-size: 26rpx;
     color: #434343;
     .upload-title {
-      margin-bottom: 28rpx;
+      margin-bottom: 30rpx;
     }
     .upload-images-list {
       display: flex;
       &__btn, &__item {
-        width: 128rpx;
-        height: 128rpx;
-        margin-right: 10rpx;
+        width: 130rpx;
+        height: 130rpx;
+        margin-right: 8rpx;
       }
       &__btn {
-        font-size: 74rpx;
-        line-height: 128rpx;
+        font-size: 75rpx;
+        line-height: 130rpx;
         text-align: center;
         color: #a6a6a6;
         background-color: #d8d8d8;

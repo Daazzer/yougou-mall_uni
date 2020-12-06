@@ -92,6 +92,7 @@ export default {
   padding: 15rpx 22rpx;
   border-top: 1px solid #fafafa;
   background-color: #fff;
+  z-index: 100;
   &__opt-group {
     display: flex;
     align-items: center;
