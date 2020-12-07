@@ -18,7 +18,7 @@
     <view class="cart-list--none" v-else>购物车空空如也...</view>
     <GoodsCalcBar
       checkedAllBtn
-      :bottom="'110rpx'"
+      :paddingBottom="'126rpx'"
       :showDeleteBtn="showDeleteBtn"
       :isCheckedAll="isCheckedAll"
       :totalPrice="totalPrice"

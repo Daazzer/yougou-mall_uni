@@ -26,7 +26,7 @@
       />
     </view>
     <GoodsCalcBar
-      :bottom="'0rpx'"
+      :paddingBottom="'15rpx'"
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
       :disabledSettleBtn="!(hasConsignee && checkedGoodsNum > 0) || isPaying"

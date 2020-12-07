@@ -2,9 +2,9 @@
   <view
     class="goods-calc-bar"
     :style="{
-      bottom,
-      bottom: `calc(${bottom} + constant(safe-area-inset-bottom))`,
-      bottom: `calc(${bottom} + env(safe-area-inset-bottom))`
+      paddingBottom,
+      paddingBottom: `calc(${paddingBottom} + constant(safe-area-inset-bottom))`,
+      paddingBottom: `calc(${paddingBottom} + env(safe-area-inset-bottom))`
     }"
   >
     <view class="goods-calc-bar__opt-group">
@@ -48,7 +48,7 @@
 export default {
   name: 'GoodsCalcBar',
   props: {
-    bottom: {
+    paddingBottom: {
       type: [String, Number],
       default: 0
     },
@@ -92,11 +92,11 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100rpx;
-  padding: 15rpx 22rpx;
+  padding: 15rpx 22rpx 0;
   border-top: 1px solid #fafafa;
   background-color: #fff;
   z-index: 100;
