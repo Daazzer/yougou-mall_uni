@@ -215,9 +215,9 @@ page {
 
 <style lang="scss" scoped>
 .pay {
-  padding: 20rpx 20rpx 100rpx;
-  padding: 20rpx 20rpx calc(100rpx + constant(safe-area-inset-bottom));
-  padding: 20rpx 20rpx calc(100rpx + env(safe-area-inset-bottom));
+  padding: 20rpx 20rpx 120rpx;
+  padding: 20rpx 20rpx calc(120rpx + constant(safe-area-inset-bottom));
+  padding: 20rpx 20rpx calc(120rpx + env(safe-area-inset-bottom));
 }
 .delivery-address, .checked-goods-list {
   background-color: #fff;
