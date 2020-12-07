@@ -1,5 +1,5 @@
 <template>
-  <view :class="{ 'goods-detail': true, 'iPhone-X': isIPhoneX }">
+  <view :class="{ 'goods-detail': true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
     <swiper
       class="goods-pics"
       indicator-active-color="#ea4350"
@@ -50,7 +50,7 @@
     </view>
     <view class="goods-intro--none" v-else>暂无图文详情</view>
     <GoodsOptionsBar
-      :bottom="isIPhoneX ? '20rpx' : 0"
+      :bottom="hasIPhoneFullScreenIndicator ? '20rpx' : 0"
       :goods_number="goods_number"
       :goods_id="goods_id"
       @add-to-cart="addToCart"
@@ -61,6 +61,7 @@
 <script>
 import GoodsOptionsBar from '@/components/goods_detail/GoodsOptionsBar.vue'
 import { getYougou, setYougou } from '@/utils/storage'
+import { checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'GoodsDetail',
@@ -74,8 +75,7 @@ export default {
       goodsDetail: {
         pics: []
       },
-      isFavoriteGoods: false,
-      isIPhoneX: false
+      isFavoriteGoods: false
     }
   },
   computed: {
@@ -90,7 +90,8 @@ export default {
         title: this.goodsDetail.goods_name,
         imageUrl: this.goodsDetail.goods_big_logo
       }
-    }
+    },
+    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   methods: {
     async renderGoodsDetail (goods_id) {
@@ -170,8 +171,6 @@ export default {
     uni.showShareMenu({ withShareTicket: true })
     this.goods_id = Number(goods_id)
     this.renderGoodsDetail(Number(goods_id))
-    const sysInfo = uni.getSystemInfoSync()
-    this.isIPhoneX = sysInfo.model === 'iPhone X'
   },
   onShow () {
     let favoriteGoodsItems = this.$yougou.getData('favoriteGoodsItems')
@@ -212,7 +211,7 @@ page {
 <style lang="scss" scoped>
 .goods-detail {
   padding-bottom: 140rpx;
-  &.iPhone-X {
+  &.iPhone-full-screen-indicator {
     padding-bottom: 160rpx;
   }
 }

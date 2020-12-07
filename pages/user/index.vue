@@ -1,5 +1,5 @@
 <template>
-  <view class="user">
+  <view :class="{ user: true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
     <view class="user__info">
       <view
         class="user-bg"
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { checkLogin } from '@/utils'
+import { checkLogin, checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'User',
@@ -78,7 +78,8 @@ export default {
       }
 
       return userOptionItems
-    }
+    },
+    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   methods: {
     handleOption (key, data) {
@@ -155,6 +156,10 @@ page {
 
 <style lang="scss" scoped>
 .user {
+  padding-bottom: 120rpx;
+  &.iPhone-full-screen-indicator {
+    padding-bottom: 140rpx;
+  }
   &__info {
     position: relative;
     display: flex;

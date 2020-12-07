@@ -2,7 +2,8 @@
   <view
     :class="{
       'goods-list-container': true,
-      'pt-100_88': isSearchBarFixed
+      'pt-100_88': isSearchBarFixed,
+      'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator
     }"
   >
     <SearchBar id="searchBar" :isFixed="isSearchBarFixed" />
@@ -39,7 +40,7 @@
 <script>
 import SearchBar from '@/components/SearchBar.vue'
 import GoodsItem from '@/components/GoodsItem.vue'
-import { getRect } from '@/utils'
+import { getRect, checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'GoodsList',
@@ -65,6 +66,9 @@ export default {
       ],
       goodsItems: []
     }
+  },
+  computed: {
+    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   methods: {
     async renderGoodsItems (params) {
@@ -140,9 +144,12 @@ export default {
 
 <style lang="scss" scoped>
 .goods-list-container {
-  padding-bottom: 113rpx;
+  padding-bottom: 120rpx;
   &.pt-100_88 {
     padding-top: 188rpx;
+  }
+  &.iPhone-full-screen-indicator {
+    padding-bottom: 140rpx;
   }
 }
 .sort {

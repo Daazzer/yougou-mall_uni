@@ -1,7 +1,7 @@
 <template>
   <view class="category">
     <SearchBar isFixed />
-    <scroll-view class="category-nav-list" scroll-y>
+    <scroll-view :class="{ 'category-nav-list': true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }" scroll-y>
       <template v-if="categoryNavItems">
         <view
           :class="{
@@ -44,6 +44,7 @@
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
+import { checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'Category',
@@ -55,6 +56,9 @@ export default {
       categoryNavSelected: 0,
       categoryNavItems: []
     }
+  },
+  computed: {
+    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   methods: {
     async renderCategoryNavItems () {
@@ -98,6 +102,9 @@ export default {
 <style lang="scss" scoped>
 .category {
   padding-bottom: 120rpx;
+  &.iPhone-full-screen-indicator {
+    padding-bottom: 140rpx;
+  }
 }
 .category-nav-list {
   position: fixed;
