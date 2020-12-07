@@ -1,5 +1,5 @@
 <template>
-  <view :class="{ cart: true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
+  <view class="cart">
     <view class="cart-list" v-if="goodsItems.length > 0">
       <GoodsItem
         v-for="(goodsItem, index) in goodsItems"
@@ -18,7 +18,7 @@
     <view class="cart-list--none" v-else>购物车空空如也...</view>
     <GoodsCalcBar
       checkedAllBtn
-      :bottom="hasIPhoneFullScreenIndicator ? '130rpx' : '110rpx'"
+      :bottom="'110rpx'"
       :showDeleteBtn="showDeleteBtn"
       :isCheckedAll="isCheckedAll"
       :totalPrice="totalPrice"
@@ -36,7 +36,6 @@
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
 import GoodsCalcBar from '@/components/GoodsCalcBar.vue'
-import { checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'Cart',
@@ -80,8 +79,7 @@ export default {
     },
     showDeleteBtn () {
       return this.goodsItems.length > 0
-    },
-    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
+    }
   },
   methods: {
     handleCheckedGoods (index) {
@@ -151,9 +149,8 @@ export default {
 <style lang="scss" scoped>
 .cart {
   padding: 20rpx 0 230rpx;
-  &.iPhone-full-screen-indicator {
-    padding: 20rpx 0 250rpx;
-  }
+  padding: 20rpx 0 calc(230rpx + constant(safe-area-inset-bottom));
+  padding: 20rpx 0 calc(230rpx + env(safe-area-inset-bottom));
   &-list {
     padding: 0 26rpx;
     &--none {

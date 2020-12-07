@@ -1,5 +1,5 @@
 <template>
-  <view :class="{ pay: true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
+  <view class="pay">
     <view class="delivery-address" @click="chooseAddress">
       <view class="delivery-address__content" v-if="hasConsignee">
         <view class="delivery-receiver-address">{{ consignee.address }}</view>
@@ -26,7 +26,7 @@
       />
     </view>
     <GoodsCalcBar
-      :bottom="hasIPhoneFullScreenIndicator ? '20rpx' : 0"
+      :bottom="'0rpx'"
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
       :disabledSettleBtn="!(hasConsignee && checkedGoodsNum > 0) || isPaying"
@@ -40,7 +40,7 @@
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
 import GoodsCalcBar from '@/components/GoodsCalcBar.vue'
-import { checkLogin, checkIPhoneFullScreenIndicator } from '@/utils'
+import { checkLogin } from '@/utils'
 
 export default {
   name: 'Pay',
@@ -69,8 +69,7 @@ export default {
       const keys = ['address', 'name', 'phone']
 
       return keys.every(key => this.consignee[key] !== '' && this.consignee[key])
-    },
-    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
+    }
   },
   filters: {
     maskPhoneNum (phoneNum) {
@@ -217,9 +216,8 @@ page {
 <style lang="scss" scoped>
 .pay {
   padding: 20rpx 20rpx 100rpx;
-  &.iPhone-full-screen-indicator {
-    padding: 20rpx 20rpx 120rpx;
-  }
+  padding: 20rpx 20rpx calc(100rpx + constant(safe-area-inset-bottom));
+  padding: 20rpx 20rpx calc(100rpx + env(safe-area-inset-bottom));
 }
 .delivery-address, .checked-goods-list {
   background-color: #fff;

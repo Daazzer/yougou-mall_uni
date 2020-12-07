@@ -1,5 +1,5 @@
 <template>
-  <view :class="{ 'goods-detail': true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
+  <view class="goods-detail">
     <swiper
       class="goods-pics"
       indicator-active-color="#ea4350"
@@ -50,7 +50,6 @@
     </view>
     <view class="goods-intro--none" v-else>暂无图文详情</view>
     <GoodsOptionsBar
-      :bottom="hasIPhoneFullScreenIndicator ? '20rpx' : 0"
       :goods_number="goods_number"
       :goods_id="goods_id"
       @add-to-cart="addToCart"
@@ -61,7 +60,6 @@
 <script>
 import GoodsOptionsBar from '@/components/goods_detail/GoodsOptionsBar.vue'
 import { getYougou, setYougou } from '@/utils/storage'
-import { checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'GoodsDetail',
@@ -90,8 +88,7 @@ export default {
         title: this.goodsDetail.goods_name,
         imageUrl: this.goodsDetail.goods_big_logo
       }
-    },
-    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
+    }
   },
   methods: {
     async renderGoodsDetail (goods_id) {
@@ -211,9 +208,8 @@ page {
 <style lang="scss" scoped>
 .goods-detail {
   padding-bottom: 140rpx;
-  &.iPhone-full-screen-indicator {
-    padding-bottom: 160rpx;
-  }
+  padding-bottom: calc(140rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
 }
 .goods-pics {
   background-color: #fff;

@@ -1,5 +1,12 @@
 <template>
-  <view class="goods-calc-bar" :style="{ bottom }">
+  <view
+    class="goods-calc-bar"
+    :style="{
+      bottom,
+      bottom: `calc(${bottom} + constant(safe-area-inset-bottom))`,
+      bottom: `calc(${bottom} + env(safe-area-inset-bottom))`
+    }"
+  >
     <view class="goods-calc-bar__opt-group">
       <view
         class="checked-all-btn"

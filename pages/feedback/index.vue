@@ -88,6 +88,8 @@ page {
 <style lang="scss" scoped>
 .feedback {
   padding: 20rpx;
+  padding: 20rpx 20rpx calc(20rpx + constant(safe-area-inset-bottom));
+  padding: 20rpx 20rpx calc(20rpx + env(safe-area-inset-bottom));
   &__quest-type,
   &__quest-content,
   &__upload {

@@ -1,10 +1,6 @@
 <template>
 	<view
-    :class="{
-      index: true,
-      'pt-100': isSearchBarFixed,
-      'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator
-    }"
+    :class="{ index: true, 'pt-100': isSearchBarFixed }"
   >
     <SearchBar :isFixed="isSearchBarFixed" id="searchBar" />
     <swiper
@@ -79,7 +75,7 @@
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
-import { getRect, checkIPhoneFullScreenIndicator } from '@/utils'
+import { getRect } from '@/utils'
 
 export default {
   name: 'index',
@@ -94,9 +90,6 @@ export default {
       cateItems: [],
       recommendItems: []
     }
-  },
-  computed: {
-    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   filters: {
     goodsListUrl (url) {
@@ -199,9 +192,8 @@ export default {
 <style lang="scss" scoped>
 .index {
   padding-bottom: 120rpx;
-  &.iPhone-full-screen-indicator {
-    padding-bottom: 140rpx;
-  }
+  padding-bottom: calc(120rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
 }
 .carousel {
   height: 340rpx;

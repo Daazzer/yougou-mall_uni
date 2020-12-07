@@ -1,5 +1,5 @@
 <template>
-  <view class="goods-options-bar" :style="{ bottom }">
+  <view class="goods-options-bar">
     <view class="goods-options-bar__opt">
       <button
         class="goods-options-opt-item"
@@ -45,10 +45,6 @@ export default {
     goods_id: {
       type: Number,
       default: 0
-    },
-    bottom: {
-      type: [String, Number],
-      default: 0
     }
   }
 }
@@ -61,6 +57,9 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
+  bottom: 0;
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
   height: 120rpx;
   padding: 30rpx 30rpx 0 40rpx;
   box-sizing: border-box;
