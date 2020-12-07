@@ -82,6 +82,11 @@ https://api-hmugo-web.itheima.net/api/public/v1/
 - 全局 api 请求方法封装，并挂载带 Vue 根实例原型
 - 将 `uni.getStorageSync()` 与 `uni.setStorageSync()` 方法封装到根 Vue 原型上，实现对象的数据与本地数据同步，并且到处复用
 - 公用方法：日期格式化、检测登录状态、DOM 元素矩形尺寸获取、响应错误提示
+- 兼容 iPhone 的全面屏手势提示线的 CSS 值： [Designing Websites for iPhone X | WebKit](https://webkit.org/blog/7929/designing-websites-for-iphone-x/?hmsr=funteas.com&utm_medium=funteas.com&utm_source=funteas.com) 
+  - `constant(safe-area-inset-bottom)` 用于兼容 iOS 11
+  - `env(safe-area-inset-bottom)` 用于兼容 iOS 11.2beta+
+
+  
 
 ### 首页
 
