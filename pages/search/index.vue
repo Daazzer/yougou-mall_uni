@@ -3,7 +3,7 @@
     <view class="search-bar">
       <view class="search-bar__input-group">
         <text class="iconfont icon-sousuo" />
-        <input type="text" v-model="searchText" placeholder="输入商品名" />
+        <input type="text" v-model="searchText" placeholder="输入商品名" focus />
       </view>
       <button
         class="search-bar__btn"
@@ -89,6 +89,8 @@ export default {
 <style lang="scss" scoped>
 .search {
   padding: 110rpx 0 20rpx;
+  padding: 110rpx 0 calc(20rpx + constant(safe-area-inset-bottom));
+  padding: 110rpx 0 calc(20rpx + env(safe-area-inset-bottom));
 }
 .search-bar {
   position: fixed;
