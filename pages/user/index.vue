@@ -69,7 +69,7 @@ export default {
       const userOptionItems = [
         { text: '联系客服', subText: '400-618-4000', icon: 'kefu' },
         { text: '意见反馈', icon: 'fankuitianbao' },
-        { text: '当前版本', subText: 'v4.1.1', icon: 'icon-' },
+        { text: '当前版本', subText: 'v1.0.0', icon: 'icon-' },
         { text: '注销', icon: 'zhuxiao' }
       ]
 
