@@ -53,13 +53,13 @@ export const dateFormat = timeStamp => {
 }
 
 // iPhone 设备检测
-export const checkIPhoneFullScreenIndicator = () => {
-  const sysInfo = uni.getSystemInfoSync()
-  const iPhoneFullScreenIndicatorDevices = [
-    'iPhone X',
-    'iPhone XR',
-    'iPhone XS Max',
-    'iPhone 11<iPhone12,1>'
-  ]
-  return iPhoneFullScreenIndicatorDevices.some(iPhoneFullScreenIndicatorDevice => iPhoneFullScreenIndicatorDevice === sysInfo.model)
-}
+// export const checkIPhoneFullScreenIndicator = () => {
+//   const sysInfo = uni.getSystemInfoSync()
+//   const iPhoneFullScreenIndicatorDevices = [
+//     'iPhone X',
+//     'iPhone XR',
+//     'iPhone XS Max',
+//     'iPhone 11<iPhone12,1>'
+//   ]
+//   return iPhoneFullScreenIndicatorDevices.some(iPhoneFullScreenIndicatorDevice => iPhoneFullScreenIndicatorDevice === sysInfo.model)
+// }
