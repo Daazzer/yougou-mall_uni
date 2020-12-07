@@ -58,10 +58,10 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  bottom: constant(safe-area-inset-bottom);
-  bottom: env(safe-area-inset-bottom);
   height: 120rpx;
   padding: 30rpx 30rpx 0 40rpx;
+  padding: 30rpx 30rpx calc(0rpx + constant(safe-area-inset-bottom)) 40rpx;
+  padding: 30rpx 30rpx calc(0rpx + env(safe-area-inset-bottom)) 40rpx;
   box-sizing: border-box;
   background-color: #fff;
   &__opt {
