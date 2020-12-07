@@ -1,5 +1,5 @@
 <template>
-  <view :class="{ pay: true, 'iPhone-X': isIPhoneX }">
+  <view :class="{ pay: true, 'iPhone-full-screen-indicator': hasIPhoneFullScreenIndicator }">
     <view class="delivery-address" @click="chooseAddress">
       <view class="delivery-address__content" v-if="hasConsignee">
         <view class="delivery-receiver-address">{{ consignee.address }}</view>
@@ -26,7 +26,7 @@
       />
     </view>
     <GoodsCalcBar
-      :bottom="isIPhoneX ? '20rpx' : 0"
+      :bottom="hasIPhoneFullScreenIndicator ? '20rpx' : 0"
       :totalPrice="totalPrice"
       :checkedNum="checkedGoodsNum"
       :disabledSettleBtn="!(hasConsignee && checkedGoodsNum > 0) || isPaying"
@@ -40,7 +40,7 @@
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
 import GoodsCalcBar from '@/components/GoodsCalcBar.vue'
-import { checkLogin } from '@/utils'
+import { checkLogin, checkIPhoneFullScreenIndicator } from '@/utils'
 
 export default {
   name: 'Pay',
@@ -69,7 +69,8 @@ export default {
       const keys = ['address', 'name', 'phone']
 
       return keys.every(key => this.consignee[key] !== '' && this.consignee[key])
-    }
+    },
+    hasIPhoneFullScreenIndicator: () => checkIPhoneFullScreenIndicator()
   },
   filters: {
     maskPhoneNum (phoneNum) {
@@ -197,10 +198,6 @@ export default {
       this.$yougou.setData('cart', cart)
     }
   },
-  onLoad () {
-    const sysInfo = uni.getSystemInfoSync()
-    this.isIPhoneX = sysInfo.model === 'iPhone X'
-  },
   async onShow () {
     const cart = this.$yougou.getData('cart')
     const consignee = this.$yougou.getData('consignee')
@@ -220,7 +217,7 @@ page {
 <style lang="scss" scoped>
 .pay {
   padding: 20rpx 20rpx 100rpx;
-  &.iPhone-X {
+  &.iPhone-full-screen-indicator {
     padding: 20rpx 20rpx 120rpx;
   }
 }

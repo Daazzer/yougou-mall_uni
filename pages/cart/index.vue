@@ -17,8 +17,8 @@
     </view>
     <view class="cart-list--none" v-else>购物车空空如也...</view>
     <GoodsCalcBar
-      :bottom="hasIPhoneFullScreenIndicator ? '130rpx' : '110rpx'"
       checkedAllBtn
+      :bottom="hasIPhoneFullScreenIndicator ? '130rpx' : '110rpx'"
       :showDeleteBtn="showDeleteBtn"
       :isCheckedAll="isCheckedAll"
       :totalPrice="totalPrice"
