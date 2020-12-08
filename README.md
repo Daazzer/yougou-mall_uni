@@ -121,6 +121,13 @@ https://api-hmugo-web.itheima.net/api/public/v1/
 - 通过 `onReachBottom` 实现瀑布流分页效果，并且做函数节流，阻止用户过快滚动到底部加载数据
 - 商品项组件引用，展示商品信息，并且点击组件时跳转到对应商品详情
 
+> **注意** 本案例使用官方案例的自定义 tabbar ，但是官方在自定义 tabbar 上使用了 cover-view 和 cover-image，如果用到 iOS 上显示，在引用 tabbar 的页面（在全局 "tabbar" 的 list 中没有的页面），比如这个**商品列表页**，会出现 tabbar 位置跳动的问题，最终改为 view image 标签进行解决
+>
+> 类似问题参考：
+>
+> - [自定义tabbar 在iPhone 8p中出现位置上移 | 微信开放社区 (qq.com)](https://developers.weixin.qq.com/community/develop/doc/000c240016caa09113096717656800)
+> - [底部自定义tabbar | 微信开放社区 (qq.com)](https://developers.weixin.qq.com/community/develop/doc/000c0a903407385e0658a47035b400)
+
 ### 商品详情
 
 - `<swiper>` 展示商品图片列表，如果商品无图片，隐藏索引点并且显示空图片
