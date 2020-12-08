@@ -6,16 +6,17 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 113rpx;
-  padding-bottom: constant(safe-area-inset-bottom);  /* 兼容 iOS 11 */
-  padding-bottom: env(safe-area-inset-bottom); /* 兼容 iOS 11.2beta+ */
+  padding: 15rpx 0 10rpx;
+  padding: 15rpx 0 calc(10rpx + constant(safe-area-inset-bottom)); /* 兼容 iOS 11 */
+  padding: 15rpx 0 calc(10rpx + env(safe-area-inset-bottom)); /* 兼容 iOS 11.2beta+ */
   background-color: #fafafa;
+  z-index: 9999;
 }
 .tab-bar-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 23rpx;
+  font-size: 24rpx;
   color: #8c8d8d;
 }
 .tab-bar-item.selected {
@@ -23,7 +24,7 @@
   color: #e03440;
 }
 .tab-bar-item__image {
-  width: 48rpx;
-  height: 48rpx;
-  margin-bottom: 7.3rpx;
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 10rpx;
 }
