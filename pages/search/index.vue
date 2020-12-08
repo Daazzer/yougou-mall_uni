@@ -3,7 +3,7 @@
     <view class="search-bar">
       <view class="search-bar__input-group">
         <text class="iconfont icon-sousuo" />
-        <input type="text" v-model="searchText" placeholder="输入商品名" focus />
+        <input type="text" v-model="searchText" placeholder="输入商品名" focus @confirm="searchGoods" />
       </view>
       <button
         class="search-bar__btn"
