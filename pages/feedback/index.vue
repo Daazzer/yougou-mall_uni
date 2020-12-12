@@ -121,7 +121,7 @@ page {
         &.active {
           border: 1rpx solid #ea4350;
           color: #ea4350;
-          background-color: #ffe6e6;;
+          background-color: #ffe6e6;
         }
         &:nth-child(3n) {
           margin-right: 0;
