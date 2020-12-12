@@ -52,8 +52,7 @@ export default {
     return {
       checkedGoodsItems: [],
       consignee: {},
-      isPaying: false,
-      isIPhoneX: false
+      isPaying: false
     }
   },
   computed: {
